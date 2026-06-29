@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tbay Performance Dashboard</title>
+    <style>
+        :root {
+            --tbay-teal: #00A896;
+            --tbay-teal-dark: #028074;
+            --tbay-bg: #F4F7F6;
+            --text-main: #2C3E50;
+            --text-muted: #64748B;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: var(--tbay-bg); color: var(--text-main); padding: 1.5rem; display: flex; flex-direction: column; align-items: center; min-height: 100vh; justify-content: center; }
+        
+        .dashboard-container { width: 100%; max-width: 440px; background: #FFFFFF; border-radius: 24px; box-shadow: 0 8px 32px rgba(0, 168, 150, 0.05); padding: 2.5rem 2rem; text-align: center; }
+        
+        .brand-logo { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 1.5rem; }
+        .logo-icon { width: 32px; height: 32px; background: var(--tbay-teal); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 900; font-size: 1.2rem; }
+        .logo-text { font-size: 1.6rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; }
+        .logo-text span { color: var(--tbay-teal); }
+
+        .header-title { font-weight: 700; margin-bottom: 1.5rem; font-size: 1.3rem; color: var(--text-main); }
+        .target-banner { background: var(--tbay-bg); padding: 1.25rem; border-radius: 16px; margin-bottom: 1rem; border-top: 4px solid var(--tbay-teal); }
+        .value-callout { font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin: 0.5rem 0; }
+        
+        .grid-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; text-align: left; }
+        .split-card { background: #FFF; border: 1px solid #E2E8F0; padding: 1rem; border-radius: 14px; display: flex; flex-direction: column; justify-content: space-between; }
+        .split-title { font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .split-val { font-size: 1.15rem; font-weight: 800; margin-top: 0.25rem; }
+        
+        .currency-line { font-size: 0.85rem; font-weight: 700; color: #475569; margin-top: 0.25rem; display: block; }
+        .status-msg { font-size: 0.95rem; font-weight: 600; color: #64748B; padding: 2rem 0; }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <div class="brand-logo">
+            <div class="logo-icon">T</div>
+            <div class="logo-text">Tbay<span>.</span></div>
+        </div>
+        
+        <h2 class="header-title">Your Monthly Target Dashboard</h2>
+        
+        <div id="target-content">
+            <p class="status-msg">Initializing secure device authentication sequence...</p>
+        </div>
+    </div>
+
+    <script>
+        // REPLACE THIS STRING WITH YOUR DEPLOYED APPS SCRIPT WEB APP URL
+        const BACKEND_API_URL = "YOUR_GOOGLE_SCRIPT_WEB_APP_URL_HERE";
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('target-content');
+            const deviceId = localStorage.getItem('tbay_campaign_device_token');
+
+            if (!deviceId) {
+                container.innerHTML = `<p style="color:#DC3545; font-weight:600; font-size:0.9rem; padding: 1rem 0;">⚠️ Device profile token missing. Please open the luck challenge campaign page first to initialize this device context.</p>`;
+                return;
+            }
+
+            fetch(`${BACKEND_API_URL}?action=getTarget&deviceId=${deviceId}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        container.innerHTML = `
+                            <div class="target-banner">
+                                <p class="split-title">🎯 Goal to reach by selling gift cards</p>
+                                <div class="value-callout">${parseInt(data.tradeTarget).toLocaleString()} Pts</div>
+                            </div>
+                            <div class="grid-split">
+                                <div class="split-card">
+                                    <p class="split-title">💎 Expected Payout</p>
+                                    <p class="split-val" style="color:var(--tbay-teal);">+${parseInt(data.rewardPoints).toLocaleString()} Pts</p>
+                                </div>
+                                <div class="split-card">
+                                    <p class="split-title">🌍 Cash Equivalents</p>
+                                    <div>
+                                        <span class="currency-line">🇳🇬 ₦${data.rewardNaira}</span>
+                                        <span class="currency-line">🇬🇭 GH₵${data.rewardGHS}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        container.innerHTML = `<p style="color:#DC3545; font-weight:600; font-size:0.9rem; padding:1rem 0;">❌ access denied: ${data.message}</p>`;
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    container.innerHTML = `<p style="color:#DC3545; font-weight:600; font-size:0.9rem; padding:1rem 0;">System tracking validation exception error.</p>`;
+                });
+        });
+    </script>
+</body>
+</html>
