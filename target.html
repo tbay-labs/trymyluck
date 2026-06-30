@@ -53,7 +53,6 @@
       padding: max(50px, calc(env(safe-area-inset-top) + 20px)) 20px 30px 20px;
     }
 
-    /* Loading Framework State */
     .system-loader-layer {
       position: absolute;
       top: 50%;
@@ -74,7 +73,6 @@
       text-transform: uppercase;
     }
 
-    /* Unlocked Dashboard Main View Container */
     .dashboard-panel-view {
       display: none;
       flex-direction: column;
@@ -88,7 +86,6 @@
       100% { opacity: 1; transform: scale(1) translateY(0); }
     }
 
-    /* Celebratory Top Header Block */
     .lucky-header-node {
       text-align: center;
       margin-bottom: 5px;
@@ -109,7 +106,6 @@
       -webkit-text-fill-color: transparent;
     }
 
-    /* Highly Alluring Copy Invitation Banner Container */
     .exclusive-invitation-banner {
       background: linear-gradient(145deg, #002239 0%, #003152 100%);
       border-left: 4px solid var(--tbay-primary);
@@ -130,7 +126,6 @@
       font-weight: 800;
     }
 
-    /* Ticket Coupon Code Box Component */
     .voucher-ticket-stub {
       background: linear-gradient(135deg, var(--tbay-primary) 0%, #00b3b3 100%);
       color: white;
@@ -210,7 +205,6 @@
       box-shadow: 0 4px 10px rgba(0, 49, 82, 0.08);
     }
 
-    /* Elite Metric Display Deck Panel Grid */
     .challenge-deck-card {
       background: linear-gradient(145deg, #003152 0%, #051e30 100%);
       border: 2px solid var(--gold-accent);
@@ -287,7 +281,6 @@
       width: 100%;
     }
 
-    /* Cheerful & Explicit Trading Campaign Guidelines Block */
     .guidelines-card-box {
       background: #ffffff;
       border: 1px solid rgba(0, 49, 82, 0.06);
@@ -358,13 +351,13 @@
       </div>
 
       <div class="exclusive-invitation-banner">
-        <p>You have won a coupon and an exclusive entry to grab another <span class="highlight-cash" id="bannerDynamicCash">------</span> by trading <span class="highlight-cash" id="bannerPointsOutput">0</span> Tbay points worth of gift cards before 31st July.</p>
+        <p>You have won a coupon and an exclusive entry to grab another <span class="highlight-cash" id="bannerDynamicCash">------</span> by trading <span class="highlight-cash" id="bannerTargetOutput">0</span> points worth of gift cards before 31st July. Cash rewards will be added to eligible users account by 3rd of aug.</p>
       </div>
 
       <div class="voucher-ticket-stub">
         <div class="ticket-header">
           <span class="ticket-label">Your Exclusive Coupon</span>
-          <span class="ticket-validity-tag">⏳ Valid for 7 days from unlock</span>
+          <span class="ticket-validity-tag">⏳ Valid for 7 days</span>
         </div>
         <div class="coupon-container-box">
           <span class="coupon-output-node" id="couponCodeDisplay">------</span>
@@ -386,8 +379,8 @@
           </div>
           <div class="vertical-grid-divider"></div>
           <div class="stat-slot gold-highlight">
-            <span>💎 Points Payout</span>
-            <data id="pointsOutput">0</data>
+            <span>💎 Reward</span>
+            <data id="rewardOutput">------</data>
           </div>
         </div>
       </div>
@@ -434,11 +427,11 @@
     const runtimeErrorBox = document.getElementById('runtimeErrorBox');
     
     const bannerDynamicCash = document.getElementById('bannerDynamicCash');
-    const bannerPointsOutput = document.getElementById('bannerPointsOutput');
+    const bannerTargetOutput = document.getElementById('bannerTargetOutput');
     
     const couponCodeDisplay = document.getElementById('couponCodeDisplay');
     const targetOutput = document.getElementById('targetOutput');
-    const pointsOutput = document.getElementById('pointsOutput');
+    const rewardOutput = document.getElementById('rewardOutput');
 
     const copyActionBtn = document.getElementById('copyActionBtn');
     const copyIcon = document.getElementById('copyIcon');
@@ -450,13 +443,15 @@
       const finalCashValue = isGHS ? data.rewardGHS : data.rewardNaira;
       const formattedCashString = `${currencySymbol}${finalCashValue}`;
 
-      // Show localized formatting only inside the promotional sentence
+      // Fixed: Now references tradeTarget points as the campaign objective criteria 
       bannerDynamicCash.textContent = formattedCashString;
-      bannerPointsOutput.textContent = data.rewardPoints;
+      bannerTargetOutput.textContent = data.tradeTarget;
       
       couponCodeDisplay.textContent = data.couponCode;
       targetOutput.textContent = data.tradeTarget;
-      pointsOutput.textContent = data.rewardPoints;
+      
+      // Swapped out points to explicitly present localized currency values inside the challenge panel
+      rewardOutput.textContent = formattedCashString;
     }
 
     async function initializeDashboard() {
