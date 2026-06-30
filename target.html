@@ -4,189 +4,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Tbay Campaign Dashboard</title>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
-    
     <style>
         :root {
-            --tbay-primary: #00cccc;
-            --tbay-primary-deep: #009999;
-            --tbay-secondary: #003152;
-            --tbay-bg: #ffffff;
-            --card-bg: #ffffff;
-            --text-main: #003152;
-            --text-muted: #5c7285;
-            --error-red: #e11d48;
-            --gold-accent: #ffb900;
-            --success-green: #2ecc71;
+            --tbay-primary: #00cccc; --tbay-primary-deep: #009999; --tbay-secondary: #003152; --tbay-bg: #ffffff;
+            --text-main: #003152; --text-muted: #5c7285; --error-red: #e11d48; --gold-accent: #ffb900; --success-green: #2ecc71;
         }
-        
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Plus Jakarta Sans", system-ui, sans-serif; }
         html { -webkit-text-size-adjust: 100%; }
-        
         body { 
             background-color: var(--tbay-bg); 
-            background-image: 
-                radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 0%, var(--tbay-bg) 100%),
-                repeating-conic-gradient(from 0deg at 50% 50%, 
-                    rgba(255,255,255,0) 0deg 15deg, 
-                    rgba(0, 204, 204, 0.02) 15deg 30deg,
-                    rgba(255,255,255,0) 30deg 45deg,
-                    rgba(0, 49, 82, 0.015) 45deg 60deg);
-            color: var(--text-main); 
-            min-height: 100vh; 
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 0%, var(--tbay-bg) 100%), repeating-conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,0) 0deg 15deg, rgba(0, 204, 204, 0.02) 15deg 30deg, rgba(255,255,255,0) 30deg 45deg, rgba(0, 49, 82, 0.015) 45deg 60deg);
+            color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; overflow-x: hidden; -webkit-font-smoothing: antialiased;
         }
-
-        .app-viewport {
-            width: 100%;
-            max-width: 440px;
-            min-height: 100vh;
-            position: relative;
-            padding: 0 18px 40px;
-        }
-
-        .bar {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding: max(60px, calc(env(safe-area-inset-top) + 24px)) 2px 20px;
-            position: relative;
-            z-index: 15;
-        }
-        
-        .navback {
-            background: transparent; border: 0; margin: 0; padding: 4px; cursor: pointer; color: var(--tbay-secondary);
-            display: grid; place-items: center; line-height: 0; -webkit-tap-highlight-color: transparent;
-            position: relative; z-index: 16; transition: transform 0.1s ease;
-        }
+        .app-viewport { width: 100%; max-width: 440px; min-height: 100vh; position: relative; padding: 0 18px 40px; }
+        .bar { display: flex; align-items: center; justify-content: flex-start; padding: max(60px, calc(env(safe-area-inset-top) + 24px)) 2px 20px; position: relative; z-index: 15; }
+        .navback { background: transparent; border: 0; margin: 0; padding: 4px; cursor: pointer; color: var(--tbay-secondary); display: grid; place-items: center; line-height: 0; }
         .navback svg { width: 24px; height: 24px; display: block; }
-
-        .luck-graphics-stage {
-            position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
-        }
+        .luck-graphics-stage { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
         .luck-element { position: absolute; opacity: 0.25; animation: luckFloat 6s ease-in-out infinite; }
-        
-        .luck-sparkle {
-            background: linear-gradient(135deg, var(--tbay-primary), var(--tbay-secondary));
-            clip-path: polygon(50% 0%, 63% 37%, 100% 50%, 63% 63%, 50% 100%, 37% 63%, 0% 50%, 37% 37%);
-        }
+        .luck-sparkle { background: linear-gradient(135deg, var(--tbay-primary), var(--tbay-secondary)); clip-path: polygon(50% 0%, 63% 37%, 100% 50%, 63% 63%, 50% 100%, 37% 63%, 0% 50%, 37% 37%); }
         .sp-1 { width: 34px; height: 34px; top: 18%; left: 8%; }
         .sp-2 { width: 22px; height: 22px; top: 45%; right: 6%; animation-delay: 1.5s; }
-        .sp-3 { width: 28px; height: 28px; bottom: 22%; left: 10%; animation-delay: 0.7s; }
-
-        .luck-coin {
-            border-radius: 50%; background: linear-gradient(135deg, #ffffff, #e6fcfc);
-            border: 4px solid var(--tbay-primary); box-shadow: 0 4px 10px rgba(0, 204, 204, 0.2);
-            display: flex; align-items: center; justify-content: center;
-        }
-        .luck-coin::before { content: ''; width: 42%; height: 42%; border: 2px solid var(--tbay-primary); transform: rotate(45deg); }
-        .cn-1 { width: 44px; height: 44px; top: 28%; right: 8%; animation-duration: 7s; animation-delay: 0.5s; }
-        .cn-2 { width: 34px; height: 34px; top: 62%; left: 4%; animation-duration: 5s; animation-delay: 1.2s; }
-
-        .luck-confetti { width: 14px; height: 14px; background: var(--gold-accent); transform: rotate(45deg); opacity: 0.2; }
-        .cf-1 { top: 52%; left: 14%; animation-duration: 4s; }
-        .cf-2 { top: 74%; right: 12%; animation-duration: 5.5s; animation-delay: 0.3s; }
-
-        .app-card-platform { 
-            width: 100%; 
-            background: rgba(255, 255, 255, 0.96); 
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border-radius: 32px; 
-            border: 3px solid #ffffff;
-            box-shadow: 
-                inset 0 -8px 0px rgba(0, 49, 82, 0.03),
-                0 20px 50px rgba(0, 49, 82, 0.06);
-            padding: 3rem 2rem; 
-            position: relative; 
-            z-index: 2;
-            animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
+        .app-card-platform { width: 100%; background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(12px); border-radius: 32px; border: 3px solid #ffffff; box-shadow: 0 20px 50px rgba(0, 49, 82, 0.06); padding: 3rem 2rem; position: relative; z-index: 2; animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .display-header-title { font-family: "Archivo", sans-serif; text-align: center; font-size: 2.2rem; font-weight: 900; margin-bottom: 1.5rem; line-height: 1.15; letter-spacing: -0.02em; color: var(--tbay-secondary); }
         .display-header-title span { color: var(--tbay-primary-deep); }
-        
         .voucher-stub { text-align: center; background: linear-gradient(162deg, #0e8090 0%, #0a5a66 50%, #0e3a47 100%); color: white; padding: 2rem 1.5rem; border-radius: 24px; margin-bottom: 1.5rem; box-shadow: 0 16px 36px rgba(10, 90, 102, 0.2); position: relative; }
         .voucher-stub::before, .voucher-stub::after { content: ''; position: absolute; top: 50%; width: 20px; height: 20px; background: var(--tbay-bg); border-radius: 50%; transform: translateY(-50%); }
         .voucher-stub::before { left: -11px; } .voucher-stub::after { right: -11px; }
         .voucher-label { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255, 255, 255, 0.7); margin-bottom: 0.25rem; }
-        
         .copy-input-container { display: flex; align-items: center; background: rgba(0, 0, 0, 0.2); border-radius: 14px; padding: 4px 8px 4px 16px; margin: 0.5rem 0; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .ticker-code-display { font-family: "Archivo", sans-serif; font-size: 2rem; font-weight: 900; letter-spacing: 3px; color: var(--tbay-primary); text-shadow: 0 0 12px rgba(0, 204, 204, 0.4); text-transform: uppercase; border: none; background: transparent; width: 100%; outline: none; text-align: center; }
-        .copy-action-btn { background: transparent; border: none; color: #ffffff; cursor: pointer; padding: 8px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; -webkit-tap-highlight-color: transparent; }
+        .ticker-code-display { font-family: "Archivo", sans-serif; font-size: 2rem; font-weight: 900; letter-spacing: 3px; color: var(--tbay-primary); border: none; background: transparent; width: 100%; outline: none; text-align: center; }
+        .copy-action-btn { background: transparent; border: none; color: #ffffff; cursor: pointer; padding: 8px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
         .copy-action-btn svg { width: 22px; height: 22px; fill: currentColor; }
-        
         .dashed-cut-line { border-top: 2px dashed rgba(255, 255, 255, 0.25); margin: 1.5rem 0 1.25rem 0; }
         .metrics-wrapper { display: flex; flex-direction: column; gap: 1rem; }
-        .metric-tile-card { background: #f8fafc; padding: 1.25rem 1.5rem; border-radius: 20px; border: 1px solid #e2e8f0; border-left: 5px solid var(--tbay-secondary); text-align: left; }
-        .metric-title-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 800; letter-spacing: 0.8px; }
-        .metric-value-number { font-family: "Archivo", sans-serif; font-size: 1.6rem; font-weight: 900; color: var(--tbay-secondary); margin-top: 0.25rem; }
-        .metric-value-number span { font-size: 1.1rem; font-weight: 700; margin-left: 2px; }
         
-        .currency-payout-row { display: flex; justify-content: space-between; margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid #e2e8f0; }
+        /* HIGH AESTHETIC REVOLUTION LUXURY CHALLENGE SECTION DECK HOOKS */
+        .target-premium-card {
+            background: linear-gradient(145deg, #003152 0%, #051e30 100%);
+            border: 2px solid var(--gold-accent); border-radius: 24px;
+            padding: 1.5rem 1.25rem; position: relative; overflow: hidden;
+            box-shadow: 0 12px 32px rgba(0, 49, 82, 0.15), 0 0 20px rgba(255, 185, 0, 0.1);
+        }
+        .target-premium-card::before {
+            content: ''; position: absolute; top: -50%; right: -30%; width: 180px; height: 180px;
+            background: radial-gradient(circle, rgba(255, 185, 0, 0.12) 0%, transparent 70%); pointer-events: none;
+        }
+        .premium-badge {
+            display: inline-flex; align-items: center; gap: 4px;
+            background: linear-gradient(90deg, #ffb900, #ff9900); color: #003152;
+            font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 99px;
+            text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.6rem;
+        }
+        .premium-card-title { font-family: "Archivo", sans-serif; color: #ffffff; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.3rem; }
+        .premium-card-subtitle { font-size: 0.78rem; color: #a5b4fc; line-height: 1.4; margin-bottom: 1.2rem; font-weight: 500; }
+        
+        .target-stats-grid {
+            display: grid; grid-template-columns: 1fr 1px 1fr; gap: 8px;
+            background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.08); align-items: center;
+        }
+        .stat-box-inner { display: flex; flex-direction: column; }
+        .stat-box-divider { height: 32px; background: rgba(255, 255, 255, 0.12); }
+        .stat-box-label { font-size: 0.65rem; color: rgba(255, 255, 255, 0.45); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 0.2rem; }
+        .stat-box-value { font-family: "Archivo", sans-serif; font-size: 1.45rem; font-weight: 900; color: #ffffff; }
+        .stat-box-value.gold { color: var(--gold-accent); text-shadow: 0 0 10px rgba(255, 185, 0, 0.2); }
+        .stat-box-value span { font-size: 0.85rem; font-weight: 700; margin-left: 2px; color: rgba(255, 255, 255, 0.5); }
+        
+        .currency-tile-fallback { background: #f8fafc; padding: 1rem 1.25rem; border-radius: 20px; border: 1px solid #e2e8f0; text-align: left; }
+        .currency-payout-row { display: flex; justify-content: space-between; align-items: center; }
         .currency-value-string { font-size: 0.95rem; font-weight: 800; color: #0a5a66; }
-        
-        .rules-card-platform { width: 100%; background: #ffffff; border-radius: 24px; border: 1px solid rgba(0, 49, 82, 0.08); box-shadow: 0 10px 30px rgba(0, 49, 82, 0.03); padding: 1.75rem; margin-top: 1.25rem; position: relative; z-index: 2; animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both; }
+
+        .rules-card-platform { width: 100%; background: #ffffff; border-radius: 24px; border: 1px solid rgba(0, 49, 82, 0.08); padding: 1.75rem; margin-top: 1.25rem; position: relative; z-index: 2; }
         .rules-card-title { font-family: "Archivo", sans-serif; font-size: 0.9rem; font-weight: 800; color: var(--tbay-secondary); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.8px; }
         .rules-card-platform ul { list-style: none; font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
         .rules-card-platform li { margin-bottom: 0.6rem; position: relative; padding-left: 1.25rem; font-weight: 500; }
         .rules-card-platform li::before { content: '✓'; position: absolute; left: 0; color: var(--tbay-primary-deep); font-weight: bold; }
-        
-        /* Compact, space-optimized loading and error messages */
         .loading-view { padding: 3rem 0; text-align: center; font-weight: 700; font-size: 0.85rem; color: var(--text-muted); }
         .compact-error-text { font-size: 0.82rem; line-height: 1.5; color: var(--text-muted); margin-bottom: 1.25rem; }
-        
-        .action-button { 
-            width: 100%; padding: 1.15rem; background: linear-gradient(135deg, var(--tbay-primary), var(--tbay-primary-deep)); 
-            color: var(--tbay-secondary); border: none; border-radius: 18px; font-family: "Archivo", sans-serif;
-            font-size: 1.15rem; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; text-decoration: none; display: block; text-align: center; 
-        }
-        
+        .action-button { width: 100%; padding: 1.15rem; background: linear-gradient(135deg, var(--tbay-primary), var(--tbay-primary-deep)); color: var(--tbay-secondary); border: none; border-radius: 18px; font-family: "Archivo", sans-serif; font-size: 1.15rem; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; text-decoration: none; display: block; text-align: center; }
         @keyframes luckFloat { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(8deg); } }
         @keyframes cardEntrance { 0% { transform: translateY(24px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
     </style>
 </head>
 <body>
-
     <div class="app-viewport">
         <div class="luck-graphics-stage">
             <div class="luck-element luck-sparkle sp-1"></div>
             <div class="luck-element luck-sparkle sp-2"></div>
-            <div class="luck-element luck-sparkle sp-3"></div>
             <div class="luck-element luck-coin cn-1"></div>
-            <div class="luck-element luck-coin cn-2"></div>
-            <div class="luck-element luck-confetti cf-1"></div>
-            <div class="luck-element luck-confetti cf-2"></div>
         </div>
-
         <div class="bar">
-            <button class="navback" type="button" onclick="history.back()" aria-label="Go back">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-            </button>
+            <button class="navback" type="button" onclick="history.back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
         </div>
-
         <div class="app-card-platform" id="target-content">
             <div class="loading-view" id="loading-spinner">Loading...</div>
-
             <div class="reveal-card" id="reveal-view" style="display:none;">
                 <h1 class="display-header-title">🎉 It’s Your <span>Lucky Day!</span></h1>
                 <p style="text-align: center; font-size: 0.9rem; line-height: 1.5; color: var(--text-muted); margin-top: -1rem; margin-bottom: 1.5rem; font-weight: 600;">
                     Fortune has favored your account! We’ve logged your active voucher properties below alongside your hand-picked target reward tier challenge.
                 </p>
-                
                 <div class="voucher-stub">
                     <div class="voucher-label">🎁 Your Instant Reward Coupon</div>
                     <div class="copy-input-container">
                         <input type="text" id="coupon-field" class="ticker-code-display" value="-----" readonly>
-                        <button class="copy-action-btn" onclick="copyCouponCode()" aria-label="Copy code" id="copy-btn">
+                        <button class="copy-action-btn" onclick="copyCouponCode()" id="copy-btn">
                             <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
                         </button>
                     </div>
@@ -195,19 +120,26 @@
                 </div>
                 
                 <div class="metrics-wrapper">
-                    <div class="metric-tile-card" style="border-left-color: var(--gold-accent);">
-                        <p class="metric-title-label" style="color: var(--gold-accent); font-weight: 800;">🚀 Double Your Fortune: Exclusive Task</p>
-                        <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem; font-weight: 600; line-height: 1.4;">
-                            Reach your personalized gift card trading milestone before July 31 to unlock an elite points payout!
-                        </p>
-                        <div class="dashed-cut-line" style="border-top-color: #e2e8f0; margin: 0.75rem 0;"></div>
-                        <p class="metric-title-label">🎯 Your Personalized Trade Target</p>
-                        <div class="metric-value-number" id="target-output">0<span>PTS</span></div>
+                    <div class="target-premium-card">
+                        <div class="premium-badge">🚀 Elite Milestone Active</div>
+                        <h2 class="premium-card-title">Double Your Fortune Challenge</h2>
+                        <p class="premium-card-subtitle">Reach your personalized gift card trading milestone before July 31 to claim this special cash prize pool allocation tier.</p>
+                        
+                        <div class="target-stats-grid">
+                            <div class="stat-box-inner">
+                                <span class="stat-box-label">🎯 Your Target</span>
+                                <div class="stat-box-value" id="target-output">0<span>PTS</span></div>
+                            </div>
+                            <div class="stat-box-divider"></div>
+                            <div class="stat-box-inner" style="padding-left: 6px;">
+                                <span class="stat-box-label">💎 Points Payout</span>
+                                <div class="stat-box-value gold" id="points-output">0<span>PTS</span></div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="metric-tile-card">
-                        <p class="metric-title-label">💎 Additional Cash Reward Waiting</p>
-                        <div class="metric-value-number" id="points-output" style="color: var(--tbay-primary-deep);">0<span>PTS</span></div>
+                    <div class="currency-tile-fallback">
+                        <p class="stat-box-label" style="color: var(--text-muted); margin-bottom: 0.4rem;">💵 Estimated Local Currency Reward Value</p>
                         <div class="currency-payout-row">
                             <span class="currency-value-string" id="naira-output">🇳🇬 ₦0.00</span>
                             <span class="currency-value-string" id="ghs-output">🇬🇭 0.00 GH₵</span>
@@ -216,7 +148,6 @@
                 </div>
             </div>
         </div>
-
         <div class="rules-card-platform" id="rules-container" style="display: none;">
             <div class="rules-card-title">📋 Trade Campaign Rules</div>
             <ul>
@@ -227,7 +158,6 @@
             </ul>
         </div>
     </div>
-
     <script>
         const BACKEND_API_URL = "https://script.google.com/macros/s/AKfycbyGM5u08oekxwYHItPoZah2t7_ZQQlnkyYkc7v1exvCIE8H_aYeWA0GhpfzEgUc0t2Vog/exec";
         const KEY_DEVICE = 'tbay_campaign_device_token';
@@ -236,14 +166,12 @@
         window.addEventListener('DOMContentLoaded', () => {
             const deviceId = localStorage.getItem(KEY_DEVICE);
             const loadingView = document.getElementById('loading-spinner');
-            
             if (!deviceId) {
                 loadingView.style.fontSize = "0.82rem";
                 loadingView.innerHTML = `<p style="color:#e11d48; font-weight:700;">Something went wrong on our end and we will fix it soon. Please try again later.</p>`;
                 return;
             }
-            
-            fetch(`${BACKEND_API_URL}?action=getTarget&deviceId=${deviceId}`)
+            fetch(`${BACKEND_API_URL}?action=getTarget&deviceId=${deviceId}`, { method: "GET" })
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
@@ -259,12 +187,10 @@
                     }
                 })
                 .catch(err => {
-                    console.error(err);
-                    loadingView.style.fontSize = "0.82rem";
+                    console.error(err); loadingView.style.fontSize = "0.82rem";
                     loadingView.innerHTML = `<span style="color:#e11d48; font-weight:700;">Something went wrong on our end and we will fix it soon. Please try again later.</span>`;
                 });
         });
-
         function renderDashboardReveal(data) {
             document.getElementById('coupon-field').value = data.couponCode;
             document.getElementById('target-output').innerHTML = `${parseInt(data.tradeTarget).toLocaleString()}<span>PTS</span>`;
@@ -274,7 +200,6 @@
             document.getElementById('reveal-view').style.display = "block";
             document.getElementById('rules-container').style.display = "block";
         }
-
         function copyCouponCode() {
             const copyText = document.getElementById("coupon-field");
             const copyBtn = document.getElementById("copy-btn");
