@@ -2,99 +2,419 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tbay Performance Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Tbay Campaign Dashboard</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --tbay-teal: #00A896;
-            --tbay-teal-dark: #028074;
-            --tbay-bg: #F4F7F6;
-            --text-main: #2C3E50;
-            --text-muted: #64748B;
+            --tbay-primary: #00cccc;
+            --tbay-primary-deep: #009999;
+            --tbay-secondary: #003152;
+            --tbay-bg: #ffffff;
+            --card-bg: #ffffff;
+            --text-main: #003152;
+            --text-muted: #5c7285;
+            --error-red: #e11d48;
+            --error-bg: #fff5f5;
+            --gold-accent: #ffb900;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: var(--tbay-bg); color: var(--text-main); padding: 1.5rem; display: flex; flex-direction: column; align-items: center; min-height: 100vh; justify-content: center; }
         
-        .dashboard-container { width: 100%; max-width: 440px; background: #FFFFFF; border-radius: 24px; box-shadow: 0 8px 32px rgba(0, 168, 150, 0.05); padding: 2.5rem 2rem; text-align: center; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Plus Jakarta Sans", system-ui, sans-serif; }
+        html { -webkit-text-size-adjust: 100%; }
         
-        .brand-logo { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 1.5rem; }
-        .logo-icon { width: 32px; height: 32px; background: var(--tbay-teal); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 900; font-size: 1.2rem; }
-        .logo-text { font-size: 1.6rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; }
-        .logo-text span { color: var(--tbay-teal); }
+        body { 
+            background-color: var(--tbay-bg); 
+            /* High-Aesthetic Luck Conic Sunburst Ray Patterns */
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 0%, var(--tbay-bg) 100%),
+                repeating-conic-gradient(from 0deg at 50% 50%, 
+                    rgba(255,255,255,0) 0deg 15deg, 
+                    rgba(0, 204, 204, 0.02) 15deg 30deg,
+                    rgba(255,255,255,0) 30deg 45deg,
+                    rgba(0, 49, 82, 0.015) 45deg 60deg);
+            color: var(--text-main); 
+            min-height: 100vh; 
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
 
-        .header-title { font-weight: 700; margin-bottom: 1.5rem; font-size: 1.3rem; color: var(--text-main); }
-        .target-banner { background: var(--tbay-bg); padding: 1.25rem; border-radius: 16px; margin-bottom: 1rem; border-top: 4px solid var(--tbay-teal); }
-        .value-callout { font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin: 0.5rem 0; }
+        /* Outer Mobile Webview Layout Engine */
+        .app-viewport {
+            width: 100%;
+            max-width: 440px;
+            min-height: 100vh;
+            position: relative;
+            padding: 0 18px 40px;
+        }
+
+        /* Notch-Safe Top Bar Element Base */
+        .bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: max(60px, calc(env(safe-area-inset-top) + 24px)) 2px 20px;
+            position: relative;
+            z-index: 15;
+        }
         
-        .grid-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; text-align: left; }
-        .split-card { background: #FFF; border: 1px solid #E2E8F0; padding: 1rem; border-radius: 14px; display: flex; flex-direction: column; justify-content: space-between; }
-        .split-title { font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-        .split-val { font-size: 1.15rem; font-weight: 800; margin-top: 0.25rem; }
+        /* Interactive Nav Back Button Engine */
+        .navback {
+            background: transparent; border: 0; margin: 0; padding: 4px; cursor: pointer; color: var(--tbay-secondary);
+            display: grid; place-items: center; line-height: 0; -webkit-tap-highlight-color: transparent;
+            position: relative;
+            z-index: 16;
+            transition: transform 0.1s ease;
+        }
+        .navback svg { width: 24px; height: 24px; display: block; }
+        .navback:active { opacity: 0.55; transform: scale(0.95); }
+
+        /* Background Floating Luck Asset Elements Container */
+        .luck-graphics-stage {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .luck-element { position: absolute; opacity: 0.25; animation: luckFloat 6s ease-in-out infinite; }
         
-        .currency-line { font-size: 0.85rem; font-weight: 700; color: #475569; margin-top: 0.25rem; display: block; }
-        .status-msg { font-size: 0.95rem; font-weight: 600; color: #64748B; padding: 2rem 0; }
+        .luck-sparkle {
+            background: linear-gradient(135deg, var(--tbay-primary), var(--tbay-secondary));
+            clip-path: polygon(50% 0%, 63% 37%, 100% 50%, 63% 63%, 50% 100%, 37% 63%, 0% 50%, 37% 37%);
+        }
+        .sp-1 { width: 34px; height: 34px; top: 18%; left: 8%; animation-delay: 0s; }
+        .sp-2 { width: 22px; height: 22px; top: 45%; right: 6%; animation-delay: 1.5s; }
+        .sp-3 { width: 28px; height: 28px; bottom: 22%; left: 10%; animation-delay: 0.7s; }
+
+        .luck-coin {
+            border-radius: 50%; background: linear-gradient(135deg, #ffffff, #e6fcfc);
+            border: 4px solid var(--tbay-primary); box-shadow: 0 4px 10px rgba(0, 204, 204, 0.2);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .luck-coin::before { content: ''; width: 42%; height: 42%; border: 2px solid var(--tbay-primary); transform: rotate(45deg); }
+        .cn-1 { width: 44px; height: 44px; top: 28%; right: 8%; animation-duration: 7s; animation-delay: 0.5s; }
+        .cn-2 { width: 34px; height: 34px; top: 62%; left: 4%; animation-duration: 5s; animation-delay: 1.2s; }
+
+        .luck-confetti { width: 14px; height: 14px; background: var(--gold-accent); transform: rotate(45deg); opacity: 0.2; }
+        .cf-1 { top: 52%; left: 14%; animation-duration: 4s; }
+        .cf-2 { top: 74%; right: 12%; animation-duration: 5.5s; animation-delay: 0.3s; }
+
+        /* Premium 3D Mobile App View Card Architecture */
+        .app-card-platform { 
+            width: 100%; 
+            background: rgba(255, 255, 255, 0.96); 
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-radius: 32px; 
+            border: 3px solid #ffffff;
+            box-shadow: 
+                inset 0 -8px 0px rgba(0, 49, 82, 0.03),
+                0 20px 50px rgba(0, 49, 82, 0.06);
+            padding: 3rem 2rem; 
+            position: relative; 
+            z-index: 2;
+            animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Typography Heading Setup */
+        .display-header-title { 
+            font-family: "Archivo", sans-serif;
+            text-align: center; 
+            font-size: 2.2rem; 
+            font-weight: 900; 
+            margin-bottom: 1.5rem; 
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: var(--tbay-secondary);
+        }
+        .display-header-title span { color: var(--tbay-primary-deep); }
+        
+        /* Voucher Ticket Stub Component */
+        .voucher-stub { 
+            text-align: center; 
+            background: linear-gradient(162deg, #0e8090 0%, #0a5a66 50%, #0e3a47 100%);
+            color: white; 
+            padding: 2rem 1.5rem; 
+            border-radius: 24px; 
+            margin-bottom: 1.5rem; 
+            box-shadow: 0 16px 36px rgba(10, 90, 102, 0.2);
+            position: relative; 
+        }
+        .voucher-stub::before, .voucher-stub::after {
+            content: ''; position: absolute; top: 50%; width: 20px; height: 20px; background: var(--tbay-bg); border-radius: 50%; transform: translateY(-50%);
+        }
+        .voucher-stub::before { left: -11px; }
+        .voucher-stub::after { right: -11px; }
+
+        .voucher-label { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255, 255, 255, 0.7); margin-bottom: 0.25rem; }
+
+        /* Clipboard Copy Layout Mechanics */
+        .copy-input-container {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 14px;
+            padding: 4px 8px 4px 16px;
+            margin: 0.5rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .ticker-code-display { 
+            font-family: "Archivo", sans-serif;
+            font-size: 2rem; 
+            font-weight: 900; 
+            letter-spacing: 3px; 
+            color: var(--tbay-primary);
+            text-shadow: 0 0 12px rgba(0, 204, 204, 0.4);
+            text-transform: uppercase; 
+            border: none;
+            background: transparent;
+            width: 100%;
+            outline: none;
+            text-align: center;
+        }
+        .copy-action-btn {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .copy-action-btn svg { width: 22px; height: 22px; fill: currentColor; }
+        .copy-action-btn:active { transform: scale(0.9); opacity: 0.7; }
+        
+        .dashed-cut-line { border-top: 2px dashed rgba(255, 255, 255, 0.25); margin: 1.5rem 0 1.25rem 0; }
+
+        /* Metrics Grid Structure */
+        .metrics-wrapper { display: flex; flex-direction: column; gap: 1rem; }
+        .metric-tile-card { 
+            background: #f8fafc; 
+            padding: 1.25rem 1.5rem; 
+            border-radius: 20px; 
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid var(--tbay-secondary); 
+            text-align: left; 
+        }
+        .metric-title-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 800; letter-spacing: 0.8px; }
+        
+        .metric-value-number { 
+            font-family: "Archivo", sans-serif;
+            font-size: 1.6rem; 
+            font-weight: 900; 
+            color: var(--tbay-secondary); 
+            margin-top: 0.25rem; 
+        }
+        .metric-value-number span { font-size: 1.1rem; font-weight: 700; margin-left: 2px; }
+        
+        .currency-payout-row { display: flex; justify-content: space-between; margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid #e2e8f0; }
+        .currency-value-string { font-size: 0.95rem; font-weight: 800; color: #0a5a66; }
+        
+        /* Campaign Rules Card Component Layout */
+        .rules-card-platform {
+            width: 100%;
+            background: #ffffff;
+            border-radius: 24px;
+            border: 1px solid rgba(0, 49, 82, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 49, 82, 0.03);
+            padding: 1.75rem;
+            margin-top: 1.25rem;
+            position: relative;
+            z-index: 2;
+            animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+        }
+        .rules-card-title {
+            font-family: "Archivo", sans-serif;
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--tbay-secondary);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .rules-card-platform ul { list-style: none; font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+        .rules-card-platform li { margin-bottom: 0.6rem; position: relative; padding-left: 1.25rem; font-weight: 500; }
+        .rules-card-platform li::before { content: '✓'; position: absolute; left: 0; color: var(--tbay-primary-deep); font-weight: bold; }
+
+        /* Center Loading Interface */
+        .loading-view {
+            padding: 4rem 0;
+            text-align: center;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        /* Functional Mechanics Keyframe Core Layouts */
+        @keyframes luckFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(8deg); }
+        }
+        @keyframes cardEntrance { 0% { transform: translateY(24px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+        @keyframes elementPop { 0% { transform: scale(0.95); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        
+        @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
     </style>
 </head>
 <body>
 
-    <div class="dashboard-container">
-        <div class="brand-logo">
-            <div class="logo-icon">T</div>
-            <div class="logo-text">Tbay<span>.</span></div>
+    <div class="app-viewport">
+        <div class="luck-graphics-stage">
+            <div class="luck-element luck-sparkle sp-1"></div>
+            <div class="luck-element luck-sparkle sp-2"></div>
+            <div class="luck-element luck-sparkle sp-3"></div>
+            <div class="luck-element luck-coin cn-1"></div>
+            <div class="luck-element luck-coin cn-2"></div>
+            <div class="luck-element luck-confetti cf-1"></div>
+            <div class="luck-element luck-confetti cf-2"></div>
         </div>
-        
-        <h2 class="header-title">Your Monthly Target Dashboard</h2>
-        
-        <div id="target-content">
-            <p class="status-msg">Initializing secure device authentication sequence...</p>
+
+        <div class="bar">
+            <button class="navback" type="button" onclick="history.back()" aria-label="Go back to the previous page">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+        </div>
+
+        <div class="app-card-platform">
+            
+            <div class="loading-view" id="loading-spinner">
+                Syncing database security parameters...
+            </div>
+
+            <div class="reveal-card" id="reveal-view">
+                <h1 class="display-header-title">🎉 It’s Your <span>Lucky Day!</span></h1>
+                <p style="text-align: center; font-size: 0.9rem; line-height: 1.5; color: var(--text-muted); margin-top: -1rem; margin-bottom: 1.5rem; font-weight: 600;">
+                    Fortune has favored your account! We’ve logged your active voucher properties below alongside your hand-picked target reward tier challenge.
+                </p>
+                
+                <div class="voucher-stub">
+                    <div class="voucher-label">🎁 Your Instant Reward Coupon</div>
+                    
+                    <div class="copy-input-container">
+                        <input type="text" id="coupon-field" class="ticker-code-display" value="-----" readonly>
+                        <button class="copy-action-btn" onclick="copyCouponCode()" aria-label="Copy code to clipboard" id="copy-btn">
+                            <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                        </button>
+                    </div>
+                    
+                    <div class="dashed-cut-line"></div>
+                    <div style="font-size: 0.82rem; font-weight: 700; color: #9ff0ee; text-transform: uppercase; letter-spacing: 0.5px;" id="validity-tag">
+                        ⏳ Valid for 7 days from unlock
+                    </div>
+                </div>
+                
+                <div class="metrics-wrapper">
+                    <div class="metric-tile-card" style="border-left-color: var(--gold-accent);">
+                        <p class="metric-title-label" style="color: var(--gold-accent); font-weight: 800;">🚀 Double Your Fortune: Exclusive Task</p>
+                        <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem; font-weight: 600; line-height: 1.4;">
+                            Reach your personalized gift card trading milestone before July 31 to unlock an elite points payout!
+                        </p>
+                        <div class="dashed-cut-line" style="border-top-color: #e2e8f0; margin: 0.75rem 0;"></div>
+                        
+                        <p class="metric-title-label">🎯 Your Personalized Trade Target</p>
+                        <div class="metric-value-number" id="target-output">0<span>PTS</span></div>
+                    </div>
+
+                    <div class="metric-tile-card">
+                        <p class="metric-title-label">💎 Additional Cash Reward Waiting</p>
+                        <div class="metric-value-number" id="points-output" style="color: var(--tbay-primary-deep);">0<span>PTS</span></div>
+                        
+                        <div class="currency-payout-row">
+                            <span class="currency-value-string" id="naira-output">🇳🇬 ₦0.00</span>
+                            <span class="currency-value-string" id="ghs-output">0.00 GH₵</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rules-card-platform" id="rules-container" style="display: none;">
+            <div class="rules-card-title">📋 Trade Campaign Rules</div>
+            <ul>
+                <li>Your assigned trade target milestone must be fulfilled explicitly by selling valid gift cards inside the Tbay application.</li>
+                <li>Trading volumes are compiled securely. Progress parameters update within our verification systems automatically.</li>
+                <li>Your unlocked 3% transaction coupon code maintains a strict validity window of exactly <strong>7 days</strong> from activation.</li>
+                <li>Milestone payouts in Tbay points, Naira (NGN), and Ghana Cedis (GHS) values are verified after the campaign closes and credited directly to your secure app wallet.</li>
+            </ul>
         </div>
     </div>
 
     <script>
-        // REPLACE THIS STRING WITH YOUR DEPLOYED APPS SCRIPT WEB APP URL
-        const BACKEND_API_URL = "YOUR_GOOGLE_SCRIPT_WEB_APP_URL_HERE";
+        const BACKEND_API_URL = "https://script.google.com/macros/s/AKfycbwh7SXa9lbGqEsM_LQI-TLxysL0FVquWjv44IwNcCY3YoLgFzLxxJtXdxjtNyVdVy1h0Q/exec";
+
+        const KEY_DEVICE = 'tbay_campaign_device_token';
 
         window.addEventListener('DOMContentLoaded', () => {
-            const container = document.getElementById('target-content');
-            const deviceId = localStorage.getItem('tbay_campaign_device_token');
-
+            const deviceId = localStorage.getItem(KEY_DEVICE);
+            const loadingView = document.getElementById('loading-spinner');
+            
             if (!deviceId) {
-                container.innerHTML = `<p style="color:#DC3545; font-weight:600; font-size:0.9rem; padding: 1rem 0;">⚠️ Device profile token missing. Please open the luck challenge campaign page first to initialize this device context.</p>`;
+                loadingView.innerHTML = `<span style="color:var(--error-red);">⚠️ Device profile context missing. Please open the luck challenge page inside your app to initialize.</span>`;
                 return;
             }
 
+            // Passive asynchronous authentication execution using device fingerprint token
             fetch(`${BACKEND_API_URL}?action=getTarget&deviceId=${deviceId}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
-                        container.innerHTML = `
-                            <div class="target-banner">
-                                <p class="split-title">🎯 Goal to reach by selling gift cards</p>
-                                <div class="value-callout">${parseInt(data.tradeTarget).toLocaleString()} Pts</div>
-                            </div>
-                            <div class="grid-split">
-                                <div class="split-card">
-                                    <p class="split-title">💎 Expected Payout</p>
-                                    <p class="split-val" style="color:var(--tbay-teal);">+${parseInt(data.rewardPoints).toLocaleString()} Pts</p>
-                                </div>
-                                <div class="split-card">
-                                    <p class="split-title">🌍 Cash Equivalents</p>
-                                    <div>
-                                        <span class="currency-line">🇳🇬 ₦${data.rewardNaira}</span>
-                                        <span class="currency-line">🇬🇭 GH₵${data.rewardGHS}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
+                        loadingView.style.display = "none";
+                        renderDashboardReveal(data);
                     } else {
-                        container.innerHTML = `<p style="color:#DC3545; font-weight:600; font-size:0.9rem; padding:1rem 0;">❌ access denied: ${data.message}</p>`;
+                        loadingView.innerHTML = `<span style="color:var(--error-red);">❌ access denied: ${data.message}</span>`;
                     }
                 })
                 .catch(err => {
                     console.error(err);
-                    container.innerHTML = `<p style="color:#DC3545; font-weight:600; font-size:0.9rem; padding:1rem 0;">System tracking validation exception error.</p>`;
+                    loadingView.innerHTML = `<span style="color:var(--error-red);">System tracking validation error. Connection timed out.</span>`;
                 });
         });
+
+        function renderDashboardReveal(data) {
+            document.getElementById('coupon-field').value = data.couponCode;
+            document.getElementById('target-output').innerHTML = `${parseInt(data.tradeTarget).toLocaleString()}<span>PTS</span>`;
+            document.getElementById('points-output').innerHTML = `+${parseInt(data.rewardPoints).toLocaleString()}<span>PTS</span>`;
+            document.getElementById('naira-output').innerText = `🇳🇬 ₦${data.rewardNaira}`;
+            document.getElementById('ghs-output').innerText = `🇬🇭 ${data.rewardGHS} GH₵`;
+            
+            document.getElementById('reveal-view').style.display = "block";
+            document.getElementById('rules-container').style.display = "block";
+        }
+
+        function copyCouponCode() {
+            const copyText = document.getElementById("coupon-field");
+            const copyBtn = document.getElementById("copy-btn");
+            
+            if (copyText.value === "-----") return;
+
+            navigator.clipboard.writeText(copyText.value)
+                .then(() => {
+                    const originalSvg = copyBtn.innerHTML;
+                    copyBtn.style.color = "var(--success-green)";
+                    copyBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>`;
+                    
+                    setTimeout(() => {
+                        copyBtn.style.color = "#ffffff";
+                        copyBtn.innerHTML = originalSvg;
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Could not copy string text components: ', err);
+                });
+        }
     </script>
 </body>
 </html>
