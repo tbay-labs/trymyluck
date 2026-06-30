@@ -443,7 +443,6 @@
       const currencyLabel = isGHS ? 'GHS' : 'Naira';
       const finalCashValue = isGHS ? data.rewardGHS : data.rewardNaira;
 
-      // Updates dynamic localized currency maps smoothly
       bannerDynamicCash.textContent = `${finalCashValue} ${currencyLabel}`;
       bannerTargetOutput.textContent = data.tradeTarget;
       
@@ -453,13 +452,9 @@
     }
 
     async function initializeDashboard() {
-      if (localStorage.getItem('tbay_verified_device') !== deviceId) {
-        window.location.replace('index.html');
-        return; 
-      }
-
+      // Fast Render: Boot from persistent local device data arrays if present
       const cachedPayload = localStorage.getItem('tbay_campaign_payload');
-      if (cachedPayload) {
+      if (localStorage.getItem('tbay_verified_device') === deviceId && cachedPayload) {
         try {
           const data = JSON.parse(cachedPayload);
           renderDashboardData(data);
@@ -468,6 +463,7 @@
         } catch (e) {}
       }
 
+      // Background Synchronization & Deep Auto-Heal Recovery Route Checks
       try {
         const url = `${DEPLOYMENT_ENDPOINT}?action=getTarget&deviceId=${encodeURIComponent(deviceId)}`;
         const response = await fetch(url, { method: 'GET', mode: 'cors' });
@@ -475,6 +471,8 @@
 
         if (data.success) {
           renderDashboardData(data);
+          // Restore credentials if local storage was cleared out
+          localStorage.setItem('tbay_verified_device', deviceId);
           localStorage.setItem('tbay_campaign_payload', JSON.stringify(data));
           
           if (loaderLayer.style.display !== 'none') {
@@ -482,6 +480,7 @@
             dashboardView.style.display = 'flex';
           }
         } else {
+          // If no signature is linked in the sheet, bounce cleanly to the portal gate
           localStorage.removeItem('tbay_verified_device');
           localStorage.removeItem('tbay_campaign_payload');
           window.location.replace('index.html');
