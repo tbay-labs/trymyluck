@@ -357,7 +357,7 @@
       <div id="stateBContainer" class="lockout-layout-wrapper">
         <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="var(--error-red)" stroke-width="1.5" style="margin-bottom: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286zm0 13.036h.008v.008H12v-.008z" /></svg>
         <h2 id="lockoutTitle">Chances Completed</h2>
-        <p id="lockoutDescription">You have completed all 3 available promotional verification attempts allocated for this session. Thank you for being a valued part of our platform. Keep an eye out for future exclusive campaigns designed specifically for you.</p>
+        <p id="lockoutDescription">You have completed all 3 available username verification attempts allocated for this session. Thank you for being a valued part of our platform. Keep an eye out for future exclusive campaigns designed specifically for you.</p>
         <button class="close-system-btn" id="closeBtn">Close</button>
       </div>
 
@@ -458,7 +458,7 @@
     submitBtn.addEventListener('click', async () => {
       const userVal = usernameInput.value.trim();
       if (!userVal) {
-        showError("Profile username identity field cannot be empty.");
+        showError("Username cannot be empty.");
         return;
       }
 
