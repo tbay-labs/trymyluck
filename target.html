@@ -72,35 +72,6 @@
       text-transform: uppercase;
     }
 
-    .recovery-link-panel {
-      display: none;
-      text-align: center;
-      background: #ffffff;
-      padding: 30px 24px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-      border: 1px solid rgba(0,49,82,0.1);
-      margin-top: 40px;
-    }
-
-    .recovery-link-panel p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-    }
-
-    .link-device-btn {
-      padding: 12px 28px;
-      background: var(--tbay-secondary);
-      color: #ffffff;
-      border: none;
-      border-radius: 10px;
-      font-weight: 700;
-      cursor: pointer;
-      text-transform: uppercase;
-      font-size: 0.85rem;
-    }
-
     .dashboard-panel-view {
       display: none;
       flex-direction: column;
@@ -353,11 +324,6 @@
       <div class="loader-txt">Loading...</div>
     </div>
 
-    <div class="recovery-link-panel" id="recoveryPanel">
-      <p>No active verification sync token discovered for this hardware session layout.</p>
-      <button class="link-device-btn" onclick="window.location.href='index.html'">Link Device Now</button>
-    </div>
-
     <div class="micro-alert-text" id="runtimeErrorBox"></div>
 
     <div class="dashboard-panel-view" id="dashboardView">
@@ -417,8 +383,7 @@
   </div>
 
   <script>
-    // Replace with your generated serverless Google Apps Script Web App Deployment URL Token
-    const DEPLOYMENT_ENDPOINT = "YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+    const DEPLOYMENT_ENDPOINT = "https://script.google.com/macros/s/AKfycbyGM5u08oekxwYHItPoZah2t7_ZQQlnkyYkc7v1exvCIE8H_aYeWA0GhpfzEgUc0t2Vog/exec";
 
     function generateDeviceSignature() {
       let keys = [
@@ -443,7 +408,6 @@
     const deviceId = generateDeviceSignature();
 
     const loaderLayer = document.getElementById('loaderLayer');
-    const recoveryPanel = document.getElementById('recoveryPanel');
     const dashboardView = document.getElementById('dashboardView');
     const runtimeErrorBox = document.getElementById('runtimeErrorBox');
     
@@ -458,7 +422,7 @@
     const checkIcon = document.getElementById('checkIcon');
 
     async function fetchDashboardMetrics() {
-      // CRITICAL SECURITY GUARD: Instantly bounce unverified cold traffic back to gateway portal
+      // Direct pass for active synchronized dashboard devices
       if (localStorage.getItem('tbay_verified_device') !== deviceId) {
         window.location.replace('index.html');
         return; 
@@ -479,23 +443,19 @@
           loaderLayer.style.display = 'none';
           dashboardView.style.display = 'flex';
         } else {
-          executeRecoveryPurge();
+          // Sync server-side status corrections back to browser storage
+          localStorage.removeItem('tbay_verified_device');
+          if (data.lockout === true) {
+            localStorage.setItem('tbay_lockout', 'true');
+            localStorage.setItem('tbay_remaining_attempts', '0');
+          }
+          window.location.replace('index.html');
         }
       } catch (err) {
         loaderLayer.style.display = 'none';
         runtimeErrorBox.textContent = "Something went wrong on our end and we will fix it soon. Please try again later.";
         runtimeErrorBox.style.display = 'block';
       }
-    }
-
-    function executeRecoveryPurge() {
-      localStorage.removeItem('tbay_verified_device');
-      loaderLayer.style.display = 'none';
-      recoveryPanel.style.display = 'block';
-      // Automatic backup routing optimization if endpoint mapping verification completely drops out
-      setTimeout(() => {
-        window.location.replace('index.html');
-      }, 1500);
     }
 
     copyActionBtn.addEventListener('click', () => {
