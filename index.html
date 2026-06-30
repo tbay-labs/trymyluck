@@ -277,7 +277,6 @@
       40%, 60% { transform: translate3d(3px, 0, 0); }
     }
 
-    /* State B: Updated Dynamic Lockout Core Layout Wrapper */
     .lockout-layout-wrapper {
       display: none;
       text-align: center;
@@ -297,7 +296,7 @@
     }
 
     .lockout-layout-wrapper p {
-      font-size: 0.85rem; /* Adheres strictly to the 0.8rem - 0.85rem micro scaling matrix rules */
+      font-size: 0.85rem;
       color: var(--text-muted);
       line-height: 1.55;
       margin-bottom: 32px;
@@ -398,9 +397,14 @@
     const backArrowBtn = document.getElementById('backArrowBtn');
     const closeBtn = document.getElementById('closeBtn');
 
+    // Binds explicitly to pageshow events to permanently kill memory-cache page state preservation
+    window.addEventListener('pageshow', (event) => {
+      initApp();
+    });
+
     function initApp() {
       if (localStorage.getItem('tbay_verified_device') === deviceId && localStorage.getItem('tbay_campaign_payload')) {
-        window.location.href = 'target.html';
+        window.location.replace('target.html');
         return;
       }
 
@@ -464,7 +468,7 @@
         if (data.success) {
           localStorage.setItem('tbay_verified_device', deviceId);
           localStorage.setItem('tbay_campaign_payload', JSON.stringify(data));
-          window.location.href = 'target.html';
+          window.location.replace('target.html');
         } else {
           if (data.lockout === true) {
             renderLockoutState();
@@ -494,8 +498,6 @@
 
     backArrowBtn.addEventListener('click', () => history.back());
     closeBtn.addEventListener('click', () => history.back());
-
-    window.addEventListener('DOMContentLoaded', initApp);
   </script>
 </body>
 </html>
