@@ -440,18 +440,16 @@
     function renderDashboardData(data) {
       const isGHS = String(data.withdrawalCurrency).trim().toLowerCase() === 'ghs';
       const currencySymbol = isGHS ? 'GH₵' : '₦';
+      const currencyLabel = isGHS ? 'GHS' : 'Naira';
       const finalCashValue = isGHS ? data.rewardGHS : data.rewardNaira;
-      const formattedCashString = `${currencySymbol}${finalCashValue}`;
 
-      // Fixed: Now references tradeTarget points as the campaign objective criteria 
-      bannerDynamicCash.textContent = formattedCashString;
+      // Updates dynamic localized currency maps smoothly
+      bannerDynamicCash.textContent = `${finalCashValue} ${currencyLabel}`;
       bannerTargetOutput.textContent = data.tradeTarget;
       
       couponCodeDisplay.textContent = data.couponCode;
       targetOutput.textContent = data.tradeTarget;
-      
-      // Swapped out points to explicitly present localized currency values inside the challenge panel
-      rewardOutput.textContent = formattedCashString;
+      rewardOutput.textContent = `${currencySymbol}${finalCashValue}`;
     }
 
     async function initializeDashboard() {
