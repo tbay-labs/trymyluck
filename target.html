@@ -52,7 +52,6 @@
       padding: max(60px, calc(env(safe-area-inset-top) + 24px)) 20px 30px 20px;
     }
 
-    /* Loading Framework State */
     .system-loader-layer {
       position: absolute;
       top: 50%;
@@ -66,14 +65,13 @@
     }
 
     .loader-txt {
-      font-size: 0.82rem; /* Exact Micro-Profile Scaling Matrix Frame */
+      font-size: 0.82rem; 
       color: var(--text-muted);
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
     }
 
-    /* Auto Recovery Framework Link Button Trigger Panel */
     .recovery-link-panel {
       display: none;
       text-align: center;
@@ -84,11 +82,13 @@
       border: 1px solid rgba(0,49,82,0.1);
       margin-top: 40px;
     }
+
     .recovery-link-panel p {
       font-size: 0.85rem;
       color: var(--text-muted);
       margin-bottom: 20px;
     }
+
     .link-device-btn {
       padding: 12px 28px;
       background: var(--tbay-secondary);
@@ -101,7 +101,6 @@
       font-size: 0.85rem;
     }
 
-    /* Unlocked Dashboard Main Elements Presentation Panel */
     .dashboard-panel-view {
       display: none;
       flex-direction: column;
@@ -115,7 +114,6 @@
       100% { opacity: 1; transform: scale(1) translateY(0); }
     }
 
-    /* Graphic Component A: Voucher Ticket Stub */
     .voucher-ticket-stub {
       background: linear-gradient(135deg, var(--tbay-primary) 0%, #00b3b3 100%);
       color: white;
@@ -195,7 +193,6 @@
       transition: all 0.2s ease;
     }
 
-    /* Component B: Challenge Deck Panel Container */
     .challenge-deck-card {
       background: linear-gradient(145deg, #003152 0%, #051e30 100%);
       border: 2px solid var(--gold-accent);
@@ -271,7 +268,6 @@
       width: 100%;
     }
 
-    /* Component C: Local Currency Estimate Block */
     .currency-estimate-bar {
       background: rgba(0, 49, 82, 0.04);
       border: 1px solid rgba(0, 49, 82, 0.08);
@@ -303,9 +299,7 @@
       color: var(--tbay-secondary);
     }
 
-    /* Component D: Campaign Guidelines Block */
     .guidelines-card-box {
-      background: transparent;
       padding: 0 4px;
     }
 
@@ -314,7 +308,6 @@
       text-transform: uppercase;
       color: var(--tbay-secondary);
       margin-bottom: 10px;
-      letter-spacing: 0.02em;
     }
 
     .guidelines-card-box ul {
@@ -338,7 +331,6 @@
       font-weight: bold;
     }
 
-    /* General Technical Error Text Reset */
     .micro-alert-text {
       font-size: 0.82rem;
       color: var(--error-red);
@@ -425,10 +417,9 @@
   </div>
 
   <script>
-    // Replace with your generated Apps Script Web App Deployment URL
-    const DEPLOYMENT_ENDPOINT = "https://script.google.com/macros/s/AKfycbyGM5u08oekxwYHItPoZah2t7_ZQQlnkyYkc7v1exvCIE8H_aYeWA0GhpfzEgUc0t2Vog/exec";
+    // Replace with your generated serverless Google Apps Script Web App Deployment URL Token
+    const DEPLOYMENT_ENDPOINT = "YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
 
-    // Re-verify fingerprint configuration criteria matching layout page 1
     function generateDeviceSignature() {
       let keys = [
         navigator.userAgent,
@@ -451,7 +442,6 @@
 
     const deviceId = generateDeviceSignature();
 
-    // DOM Interaction Pointers Map
     const loaderLayer = document.getElementById('loaderLayer');
     const recoveryPanel = document.getElementById('recoveryPanel');
     const dashboardView = document.getElementById('dashboardView');
@@ -467,26 +457,28 @@
     const copyIcon = document.getElementById('copyIcon');
     const checkIcon = document.getElementById('checkIcon');
 
-    // Asynchronous Execution Ring Control Flow Loop
     async function fetchDashboardMetrics() {
+      // CRITICAL SECURITY GUARD: Instantly bounce unverified cold traffic back to gateway portal
+      if (localStorage.getItem('tbay_verified_device') !== deviceId) {
+        window.location.replace('index.html');
+        return; 
+      }
+
       try {
         const url = `${DEPLOYMENT_ENDPOINT}?action=getTarget&deviceId=${encodeURIComponent(deviceId)}`;
         const response = await fetch(url, { method: 'GET', mode: 'cors' });
         const data = await response.json();
 
         if (data.success) {
-          // Stream metric node content models to layouts cleanly
           couponCodeDisplay.textContent = data.couponCode;
           targetOutput.textContent = data.tradeTarget;
           pointsOutput.textContent = data.rewardPoints;
           nairaOutput.textContent = `₦${data.rewardNaira}`;
           ghsOutput.textContent = `GH₵${data.rewardGHS}`;
           
-          // Animate and reveal presentation frame elements
           loaderLayer.style.display = 'none';
           dashboardView.style.display = 'flex';
         } else {
-          // Fire Auto-Recovery Circuit Loop Execution
           executeRecoveryPurge();
         }
       } catch (err) {
@@ -500,9 +492,12 @@
       localStorage.removeItem('tbay_verified_device');
       loaderLayer.style.display = 'none';
       recoveryPanel.style.display = 'block';
+      // Automatic backup routing optimization if endpoint mapping verification completely drops out
+      setTimeout(() => {
+        window.location.replace('index.html');
+      }, 1500);
     }
 
-    // Secure One-Click Clipboard Transaction Handler Matrix
     copyActionBtn.addEventListener('click', () => {
       const codeText = couponCodeDisplay.textContent;
       if (!codeText || codeText.includes('---')) return;
@@ -510,7 +505,6 @@
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(codeText).then(triggerCopySuccessVisuals);
       } else {
-        // Safe standard browser backwards-compatibility text block selection layer fallback
         const textArea = document.createElement("textarea");
         textArea.value = codeText;
         textArea.style.position = "fixed"; 
