@@ -28,7 +28,6 @@
         
         body { 
             background-color: var(--tbay-bg); 
-            /* High-Aesthetic Luck Conic Sunburst Ray Patterns */
             background-image: 
                 radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 0%, var(--tbay-bg) 100%),
                 repeating-conic-gradient(from 0deg at 50% 50%, 
@@ -45,7 +44,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Outer Mobile Webview Layout Engine matching exact reference architecture */
         .app-viewport {
             width: 100%;
             max-width: 440px;
@@ -54,35 +52,25 @@
             padding: 0 18px 40px;
         }
 
-        /* Notch-Safe Top Bar Element Base */
         .bar {
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            /* Sets programmatic top padding boundary safe from hardware notches */
             padding: max(60px, calc(env(safe-area-inset-top) + 24px)) 2px 20px;
             position: relative;
             z-index: 15;
         }
         
-        /* Interactive Nav Back Button Engine */
         .navback {
             background: transparent; border: 0; margin: 0; padding: 4px; cursor: pointer; color: var(--tbay-secondary);
             display: grid; place-items: center; line-height: 0; -webkit-tap-highlight-color: transparent;
-            position: relative;
-            z-index: 16;
-            transition: transform 0.1s ease;
+            position: relative; z-index: 16; transition: transform 0.1s ease;
         }
         .navback svg { width: 24px; height: 24px; display: block; }
         .navback:active { opacity: 0.55; transform: scale(0.95); }
 
-        /* Background Floating Luck Asset Elements Container */
         .luck-graphics-stage {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
+            position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
         }
         .luck-element { position: absolute; opacity: 0.25; animation: luckFloat 6s ease-in-out infinite; }
         
@@ -90,7 +78,7 @@
             background: linear-gradient(135deg, var(--tbay-primary), var(--tbay-secondary));
             clip-path: polygon(50% 0%, 63% 37%, 100% 50%, 63% 63%, 50% 100%, 37% 63%, 0% 50%, 37% 37%);
         }
-        .sp-1 { width: 34px; height: 34px; top: 18%; left: 8%; animation-delay: 0s; }
+        .sp-1 { width: 34px; height: 34px; top: 18%; left: 8%; }
         .sp-2 { width: 22px; height: 22px; top: 45%; right: 6%; animation-delay: 1.5s; }
         .sp-3 { width: 28px; height: 28px; bottom: 22%; left: 10%; animation-delay: 0.7s; }
 
@@ -107,7 +95,6 @@
         .cf-1 { top: 52%; left: 14%; animation-duration: 4s; }
         .cf-2 { top: 74%; right: 12%; animation-duration: 5.5s; animation-delay: 0.3s; }
 
-        /* Premium 3D Mobile App View Card Architecture */
         .app-card-platform { 
             width: 100%; 
             background: rgba(255, 255, 255, 0.96); 
@@ -118,217 +105,71 @@
                 inset 0 -8px 0px rgba(0, 49, 82, 0.03),
                 0 20px 50px rgba(0, 49, 82, 0.06);
             padding: 3.5rem 2rem 3rem 2rem; 
-            position: relative; 
-            z-index: 2;
+            position: relative; z-index: 2;
             animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* Floating Attempts Counter Tag Indicator */
         .attempts-floating-tag {
-            position: absolute;
-            top: -14px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #ffffff;
-            background: var(--tbay-secondary);
-            padding: 6px 20px;
-            border-radius: 999px;
-            font-size: 0.85rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            border: 2px solid #ffffff;
-            box-shadow: 0 6px 16px rgba(0, 49, 82, 0.15);
-            white-space: nowrap;
-            z-index: 10;
-            transition: all 0.3s ease;
+            position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+            color: #ffffff; background: var(--tbay-secondary); padding: 6px 20px;
+            border-radius: 999px; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.5px;
+            text-transform: uppercase; border: 2px solid #ffffff;
+            box-shadow: 0 6px 16px rgba(0, 49, 82, 0.15); white-space: nowrap;
+            z-index: 10; transition: all 0.3s ease;
         }
-        .attempts-floating-tag.warning {
-            background: var(--error-red);
-            box-shadow: 0 6px 16px rgba(225, 29, 72, 0.25);
-        }
+        .attempts-floating-tag.warning { background: var(--error-red); box-shadow: 0 6px 16px rgba(225, 29, 72, 0.25); }
 
-        /* Typography Heading Setup */
         .display-header-title { 
-            font-family: "Archivo", sans-serif;
-            text-align: center; 
-            font-size: 2.2rem; 
-            font-weight: 900; 
-            margin-bottom: 2rem; 
-            line-height: 1.15;
-            letter-spacing: -0.02em;
-            color: var(--tbay-secondary);
+            font-family: "Archivo", sans-serif; text-align: center; font-size: 2.2rem; 
+            font-weight: 900; margin-bottom: 2rem; line-height: 1.15; letter-spacing: -0.02em; color: var(--tbay-secondary); 
         }
         .display-header-title span { color: var(--tbay-primary-deep); }
         
         .form-interaction-layer { display: flex; flex-direction: column; gap: 1.5rem; }
         
         input[type="text"] { 
-            width: 100%; 
-            padding: 1.2rem 1.5rem; 
-            background: #f4f7f6;
-            border: 2px solid transparent; 
-            border-radius: 18px; 
-            font-size: 1.1rem; 
-            color: var(--text-main);
-            outline: none; 
-            transition: all 0.25s ease; 
-            font-weight: 700; 
-            text-align: center; 
+            width: 100%; padding: 1.2rem 1.5rem; background: #f4f7f6; border: 2px solid transparent; 
+            border-radius: 18px; font-size: 1.1rem; color: var(--text-main); outline: none; transition: all 0.25s ease; font-weight: 700; text-align: center; 
         }
-        input[type="text"]:focus { 
-            border-color: var(--tbay-primary); 
-            box-shadow: 0 0 16px rgba(0, 204, 204, 0.15);
-            background: #ffffff;
-        }
+        input[type="text"]:focus { border-color: var(--tbay-primary); box-shadow: 0 0 16px rgba(0, 204, 204, 0.15); background: #ffffff; }
         input[type="text"]::placeholder { color: rgba(0, 49, 82, 0.3); font-weight: 600; }
         
-        /* Interactive Block Action CTA Button */
         .action-button { 
-            width: 100%; 
-            padding: 1.15rem; 
-            background: linear-gradient(135deg, var(--tbay-primary), var(--tbay-primary-deep)); 
-            color: var(--tbay-secondary); 
-            border: none; 
-            border-radius: 18px; 
-            font-family: "Archivo", sans-serif;
-            font-size: 1.15rem; 
-            font-weight: 800; 
-            cursor: pointer; 
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
-            box-shadow: 0 8px 24px rgba(0, 204, 204, 0.3);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            width: 100%; padding: 1.15rem; background: linear-gradient(135deg, var(--tbay-primary), var(--tbay-primary-deep)); 
+            color: var(--tbay-secondary); border: none; border-radius: 18px; font-family: "Archivo", sans-serif;
+            font-size: 1.15rem; font-weight: 800; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
+            box-shadow: 0 8px 24px rgba(0, 204, 204, 0.3); text-transform: uppercase; letter-spacing: 0.5px; text-decoration: none; display: block; text-align: center; 
         }
-        .action-button:hover { 
-            background: linear-gradient(135deg, var(--tbay-secondary), #001f36);
-            color: #ffffff;
-            transform: translateY(-2px);
-            box-shadow: 0 12px 28px rgba(0, 49, 82, 0.2);
-        }
-        .action-button:active { transform: translateY(1px); }
+        .action-button:hover { background: linear-gradient(135deg, var(--tbay-secondary), #001f36); color: #ffffff; transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0, 49, 82, 0.2); }
         .action-button:disabled { background: #e2e8f0; color: #94a3b8; box-shadow: none; cursor: not-allowed; transform: none; }
         
-        /* Interactive System Error Alert Ribbon Component */
+        /* Optimized Space & Typography For Error Alert Bar */
         .error-alert-bar { 
-            background: var(--error-bg); 
-            border: 1px solid rgba(225, 29, 72, 0.15); 
-            color: var(--error-red); 
-            padding: 1.1rem 1.25rem; 
-            border-radius: 18px; 
-            font-size: 0.92rem; 
-            text-align: center; 
-            display: none; 
-            font-weight: 700; 
-            line-height: 1.45;
-            animation: errorShake 0.4s linear;
+            background: var(--error-bg); border: 1px solid rgba(225, 29, 72, 0.15); color: var(--error-red); 
+            padding: 0.8rem 1rem; border-radius: 16px; font-size: 0.82rem; text-align: center; 
+            display: none; font-weight: 700; line-height: 1.45; animation: errorShake 0.4s linear; 
         }
         
-        /* Voucher Ticket Stub Component */
-        .reveal-card { display: none; animation: elementPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-        
-        .voucher-stub { 
-            text-align: center; 
-            background: linear-gradient(162deg, #0e8090 0%, #0a5a66 50%, #0e3a47 100%);
-            color: white; 
-            padding: 2.25rem 1.75rem; 
-            border-radius: 24px; 
-            margin-bottom: 1.5rem; 
-            box-shadow: 0 16px 36px rgba(10, 90, 102, 0.2);
-            position: relative; 
+        .rules-card-platform { 
+            width: 100%; background: #ffffff; border-radius: 24px; border: 1px solid rgba(0, 49, 82, 0.08); 
+            box-shadow: 0 10px 30px rgba(0, 49, 82, 0.03); padding: 1.75rem; margin-top: 1.25rem; position: relative; z-index: 2; 
+            animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both; 
         }
-        .voucher-stub::before, .voucher-stub::after {
-            content: ''; position: absolute; top: 50%; width: 20px; height: 20px; background: var(--tbay-bg); border-radius: 50%; transform: translateY(-50%);
-        }
-        .voucher-stub::before { left: -11px; }
-        .voucher-stub::after { right: -11px; }
-
-        .voucher-label { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255, 255, 255, 0.7); margin-bottom: 0.25rem; }
-
-        .ticker-code-display { 
-            font-family: "Archivo", sans-serif;
-            font-size: 2.5rem; 
-            font-weight: 900; 
-            letter-spacing: 4px; 
-            margin: 0.5rem 0; 
-            color: var(--tbay-primary);
-            text-shadow: 0 0 12px rgba(0, 204, 204, 0.4);
-            background: rgba(0, 0, 0, 0.2); 
-            padding: 0.5rem; 
-            border-radius: 14px; 
-            display: inline-block; 
-            width: 100%; 
-            text-transform: uppercase; 
-        }
-        
-        .dashed-cut-line { border-top: 2px dashed rgba(255, 255, 255, 0.25); margin: 1.5rem 0 1.25rem 0; }
-
-        /* Metrics Grid Structure */
-        .metrics-wrapper { display: flex; flex-direction: column; gap: 1rem; }
-        .metric-tile-card { 
-            background: #f8fafc; 
-            padding: 1.25rem 1.5rem; 
-            border-radius: 20px; 
-            border: 1px solid #e2e8f0;
-            border-left: 5px solid var(--tbay-secondary); 
-            text-align: left; 
-        }
-        .metric-title-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 800; letter-spacing: 0.8px; }
-        
-        .metric-value-number { 
-            font-family: "Archivo", sans-serif;
-            font-size: 1.6rem; 
-            font-weight: 900; 
-            color: var(--tbay-secondary); 
-            margin-top: 0.25rem; 
-        }
-        .metric-value-number span { font-size: 1.1rem; font-weight: 700; margin-left: 2px; }
-        
-        .currency-payout-row { display: flex; justify-content: space-between; margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid #e2e8f0; }
-        .currency-value-string { font-size: 0.95rem; font-weight: 800; color: #0a5a66; }
-        
-        /* Try Your Luck External Rules Card Component Layout */
-        .rules-card-platform {
-            width: 100%;
-            background: #ffffff;
-            border-radius: 24px;
-            border: 1px solid rgba(0, 49, 82, 0.08);
-            box-shadow: 0 10px 30px rgba(0, 49, 82, 0.03);
-            padding: 1.75rem;
-            margin-top: 1.25rem;
-            position: relative;
-            z-index: 2;
-            animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
-        }
-        .rules-card-title {
-            font-family: "Archivo", sans-serif;
-            font-size: 0.9rem;
-            font-weight: 800;
-            color: var(--tbay-secondary);
-            margin-bottom: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+        .rules-card-title { font-family: "Archivo", sans-serif; font-size: 0.9rem; font-weight: 800; color: var(--tbay-secondary); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.8px; }
         .rules-card-platform ul { list-style: none; font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
         .rules-card-platform li { margin-bottom: 0.6rem; position: relative; padding-left: 1.25rem; font-weight: 500; }
         .rules-card-platform li::before { content: '✓'; position: absolute; left: 0; color: var(--tbay-primary-deep); font-weight: bold; }
-
-        /* Functional Mechanics Keyframe Core Layouts */
-        @keyframes luckFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(8deg); }
-        }
-        @keyframes cardEntrance { 0% { transform: translateY(24px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
-        @keyframes elementPop { 0% { transform: scale(0.95); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes errorShake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-6px); }
-            40%, 80% { transform: translateX(6px); }
-        }
         
+        .lockout-view-panel { 
+            display: none; width: 100%; text-align: center; animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+            background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); 
+            border-radius: 32px; border: 3px solid #ffffff; box-shadow: 0 20px 50px rgba(0, 49, 82, 0.06); padding: 3.5rem 2rem; position: relative; z-index: 2; 
+        }
+        .lockout-message { font-size: 1.05rem; line-height: 1.6; color: var(--tbay-secondary); font-weight: 600; margin-bottom: 2rem; }
+        
+        @keyframes luckFloat { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(8deg); } }
+        @keyframes cardEntrance { 0% { transform: translateY(24px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+        @keyframes errorShake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
         @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
     </style>
 </head>
@@ -346,68 +187,44 @@
         </div>
 
         <div class="bar">
-            <button class="navback" type="button" onclick="history.back()" aria-label="Go back to the previous page">
+            <button class="navback" type="button" onclick="history.back()" aria-label="Go back">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
             </button>
         </div>
 
-        <div class="app-card-platform">
+        <div class="app-card-platform" id="main-card">
             <div class="attempts-floating-tag" id="attempts-badge">3 Attempts Left</div>
-
             <div class="form-interaction-layer" id="input-view">
                 <h1 class="display-header-title">Enter Tbay username to <span>participate.</span></h1>
                 <input type="text" id="username" placeholder="Username" autocomplete="off" spellcheck="false">
                 <button id="submit-btn" class="action-button" onclick="processClaim()">Try My Luck</button>
                 <div class="error-alert-bar" id="error-box"></div>
             </div>
-
-            <div class="reveal-card" id="reveal-view">
-                <h1 class="display-header-title" style="margin-bottom: 1.5rem;">Campaign <span>Activated</span></h1>
-                
-                <div class="voucher-stub">
-                    <div class="voucher-label">Your Unlocked Coupon</div>
-                    <div class="ticker-code-display" id="code-output">-----</div>
-                    <div class="dashed-cut-line"></div>
-                    <div style="font-size: 0.85rem; font-weight: 600; color: rgba(255, 255, 255, 0.85);">
-                        ✓ Extra 3% value applied on your next trade execution
-                    </div>
-                </div>
-                
-                <div class="metrics-wrapper">
-                    <div class="metric-tile-card">
-                        <p class="metric-title-label">🎯 Assigned Gift Card Trade Target</p>
-                        <div class="metric-value-number" id="target-output">0<span>PTS</span></div>
-                    </div>
-                    <div class="metric-tile-card">
-                        <p class="metric-title-label">💎 Total Milestone Reward Value</p>
-                        <div class="metric-value-number" id="points-output">0<span>PTS</span></div>
-                        
-                        <div class="currency-payout-row">
-                            <span class="currency-value-string" id="naira-output">₦0.00</span>
-                            <span class="currency-value-string" id="ghs-output">0.00 GH₵</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
-        <div class="rules-card-platform">
+        <div class="lockout-view-panel" id="lockout-view">
+            <div class="lockout-message">
+                👋 It looks like we couldn't verify your Tbay username after 3 attempts, so this specific campaign has drawn to a close.<br><br>But please don't go far! We love having you with us, and our team is already working on brand-new, exciting surprises just for you. Bigger things are coming your way soon! 💙
+            </div>
+            <button class="action-button" onclick="history.back()">Close</button>
+        </div>
+
+        <div class="rules-card-platform" id="rules-box">
             <div class="rules-card-title">📋 Campaign Guidelines</div>
             <ul>
                 <li>This program is available exclusively for selected users invited through the banner displayed on the Tbay application homepage.</li>
                 <li>Eligible users are permitted exactly <strong>one unique campaign entry claim</strong> during the active event window.</li>
                 <li>Each user has a maximum limit of <strong>3 attempts</strong> to successfully verify their corresponding app username.</li>
                 <li>Your entry counts are saved securely within the storage layer. Refreshing or exiting the webview interface context will not replenish spent validation attempts.</li>
-                <li><strong>Event Duration:</strong> July 1, 2026 – July 31, 2026 (GMT+1)</li>
+                <li><strong>Event Duration:</strong> July 1, 2026 – July 31, 2026 (GMT+1).</li>
             </ul>
         </div>
     </div>
 
     <script>
-        // BACKEND ENDPOINT ROUTER: LIVE GOOGLE APPS SCRIPT WEB APP /EXEC PATH URL
-        const BACKEND_API_URL = "https://script.google.com/macros/s/AKfycbwh7SXa9lbGqEsM_LQI-TLxysL0FVquWjv44IwNcCY3YoLgFzLxxJtXdxjtNyVdVy1h0Q/exec";
+        const BACKEND_API_URL = "https://script.google.com/macros/s/AKfycbyGM5u08oekxwYHItPoZah2t7_ZQQlnkyYkc7v1exvCIE8H_aYeWA0GhpfzEgUc0t2Vog/exec";
         const MAX_CHANCES = 3;
 
         const KEY_ATTEMPTS = 'tbay_campaign_remaining_attempts';
@@ -428,12 +245,13 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            const isVerified = localStorage.getItem(KEY_VERIFIED) === 'true';
-            const deviceId = getDeviceID();
-            
-            if (isVerified) {
-                document.getElementById('input-view').style.display = "none";
-                executeDataFetch(deviceId);
+            if (localStorage.getItem(KEY_VERIFIED) === 'true') {
+                window.location.href = "target.html";
+                return;
+            }
+
+            if (parseInt(localStorage.getItem(KEY_ATTEMPTS), 10) <= 0) {
+                renderLockoutView();
             } else {
                 renderAttemptsCounter();
             }
@@ -442,25 +260,20 @@
         function renderAttemptsCounter() {
             const chancesLeft = parseInt(localStorage.getItem(KEY_ATTEMPTS), 10);
             const badgeDisplay = document.getElementById('attempts-badge');
-            const submitBtn = document.getElementById('submit-btn');
-            const errorBox = document.getElementById('error-box');
 
             badgeDisplay.classList.remove('warning');
-
-            if (chancesLeft <= 0) {
-                badgeDisplay.innerText = "Access Locked";
+            if (chancesLeft === 1) {
+                badgeDisplay.innerText = "1 Attempt Left!";
                 badgeDisplay.classList.add('warning');
-                submitBtn.disabled = true;
-                errorBox.innerText = "Maximum entry verification threshold reached. Access Denied.";
-                errorBox.style.display = "block";
             } else {
-                if (chancesLeft === 1) {
-                    badgeDisplay.innerText = "1 Attempt Left!";
-                    badgeDisplay.classList.add('warning');
-                } else {
-                    badgeDisplay.innerText = `${chancesLeft} Attempts Left`;
-                }
+                badgeDisplay.innerText = `${chancesLeft} Attempts Left`;
             }
+        }
+
+        function renderLockoutView() {
+            document.getElementById('main-card').style.display = "none";
+            document.getElementById('rules-box').style.display = "none";
+            document.getElementById('lockout-view').style.display = "block";
         }
 
         function processClaim() {
@@ -472,19 +285,13 @@
             if (chancesLeft <= 0) return;
 
             if (!usernameInput) {
-                errorBox.style.animation = 'none';
-                errorBox.offsetHeight; // Core programmatic DOM engine re-render trigger for animation
-                errorBox.style.animation = null;
+                errorBox.style.animation = 'none'; errorBox.offsetHeight; errorBox.style.animation = null;
                 errorBox.innerText = "Please enter your Tbay account username to proceed.";
-                errorBox.style.display = "block";
-                return;
+                errorBox.style.display = "block"; return;
             }
 
-            errorBox.style.display = "none";
-            submitBtn.innerText = "Verifying Username...";
-            submitBtn.disabled = true;
-
-            const deviceId = localStorage.getItem(KEY_DEVICE);
+            errorBox.style.display = "none"; submitBtn.innerText = "Verifying..."; submitBtn.disabled = true;
+            const deviceId = getDeviceID();
             const url = `${BACKEND_API_URL}?action=verifyUser&username=${encodeURIComponent(usernameInput)}&deviceId=${deviceId}`;
 
             fetch(url)
@@ -492,60 +299,25 @@
                 .then(data => {
                     if (data.success) {
                         localStorage.setItem(KEY_VERIFIED, 'true');
-                        renderGraphicalReveal(data);
+                        window.location.href = "target.html";
                     } else {
-                        chancesLeft--;
-                        localStorage.setItem(KEY_ATTEMPTS, chancesLeft.toString());
-                        submitBtn.disabled = false;
-                        submitBtn.innerText = "Try My Luck";
+                        chancesLeft--; localStorage.setItem(KEY_ATTEMPTS, chancesLeft.toString());
+                        submitBtn.disabled = false; submitBtn.innerText = "Try My Luck";
                         
-                        renderAttemptsCounter();
-                        
-                        errorBox.style.animation = 'none';
-                        errorBox.offsetHeight; 
-                        errorBox.style.animation = null;
-                        
-                        errorBox.innerText = `❌ Wrong Username: ${data.message}`;
-                        errorBox.style.display = "block";
+                        if (chancesLeft <= 0) {
+                            renderLockoutView();
+                        } else {
+                            renderAttemptsCounter();
+                            errorBox.style.animation = 'none'; errorBox.offsetHeight; errorBox.style.animation = null;
+                            errorBox.innerText = `❌ ${data.message}`; errorBox.style.display = "block";
+                        }
                     }
                 })
                 .catch(err => {
-                    console.error(err);
-                    submitBtn.disabled = false;
-                    submitBtn.innerText = "Try My Luck";
-                    errorBox.innerText = "Network pipeline connection issue. Please confirm internet data connectivity and retry.";
+                    console.error(err); submitBtn.disabled = false; submitBtn.innerText = "Try My Luck";
+                    errorBox.innerText = "Something went wrong on our end and we will fix it soon. Please try again later.";
                     errorBox.style.display = "block";
                 });
-        }
-
-        function executeDataFetch(deviceId) {
-            fetch(`${BACKEND_API_URL}?action=getTarget&deviceId=${deviceId}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        renderGraphicalReveal(data);
-                    } else {
-                        localStorage.removeItem(KEY_VERIFIED);
-                        document.getElementById('input-view').style.display = "flex";
-                        renderAttemptsCounter();
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    document.getElementById('reveal-view').innerHTML = `<p style="color:var(--error-red); text-align:center; padding:2rem 0; font-weight:700;">Handshake error while streaming database profile parameters.</p>`;
-                    document.getElementById('reveal-view').style.display = "block";
-                });
-        }
-
-        function renderGraphicalReveal(data) {
-            document.getElementById('input-view').style.display = "none";
-            document.getElementById('attempts-badge').innerText = "Campaign Unlocked";
-            document.getElementById('code-output').innerText = data.couponCode;
-            document.getElementById('target-output').innerHTML = `${parseInt(data.tradeTarget).toLocaleString()}<span>PTS</span>`;
-            document.getElementById('points-output').innerHTML = `+${parseInt(data.rewardPoints).toLocaleString()}<span>PTS</span>`;
-            document.getElementById('naira-output').innerText = `🇳🇬 ₦${data.rewardNaira}`;
-            document.getElementById('ghs-output').innerText = `🇬🇭 ${data.rewardGHS} GH₵`;
-            document.getElementById('reveal-view').style.display = "block";
         }
     </script>
 </body>
