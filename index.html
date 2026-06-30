@@ -277,6 +277,7 @@
       40%, 60% { transform: translate3d(3px, 0, 0); }
     }
 
+    /* State B: Updated Dynamic Lockout Core Layout Wrapper */
     .lockout-layout-wrapper {
       display: none;
       text-align: center;
@@ -289,13 +290,14 @@
 
     .lockout-layout-wrapper h2 {
       font-size: 1.45rem;
-      color: var(--tbay-secondary);
-      margin-bottom: 12px;
+      color: var(--text-main);
+      margin-bottom: 14px;
       font-weight: 800;
+      line-height: 1.3;
     }
 
     .lockout-layout-wrapper p {
-      font-size: 0.85rem;
+      font-size: 0.85rem; /* Adheres strictly to the 0.8rem - 0.85rem micro scaling matrix rules */
       color: var(--text-muted);
       line-height: 1.55;
       margin-bottom: 32px;
@@ -353,9 +355,9 @@
       </div>
 
       <div id="stateBContainer" class="lockout-layout-wrapper">
-        <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="var(--tbay-primary)" stroke-width="1.5" style="margin-bottom: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
-        <h2>Thank you for being part of the platform.</h2>
-        <p>Exclusive campaigns are currently being designed for you. Check back soon for subsequent updates.</p>
+        <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="var(--error-red)" stroke-width="1.5" style="margin-bottom: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286zm0 13.036h.008v.008H12v-.008z" /></svg>
+        <h2>Chances Completed</h2>
+        <p>You have completed all 3 available promotional verification attempts allocated for this session. Thank you for being a valued part of our platform. Keep an eye out for future exclusive campaigns designed specifically for you.</p>
         <button class="close-system-btn" id="closeBtn">Close</button>
       </div>
 
@@ -397,13 +399,11 @@
     const closeBtn = document.getElementById('closeBtn');
 
     function initApp() {
-      // Direct pass for active synchronized dashboard devices
-      if (localStorage.getItem('tbay_verified_device') === deviceId) {
+      if (localStorage.getItem('tbay_verified_device') === deviceId && localStorage.getItem('tbay_campaign_payload')) {
         window.location.href = 'target.html';
         return;
       }
 
-      // Check current attempt limits
       let attempts = localStorage.getItem('tbay_remaining_attempts');
       if (attempts === null) {
         localStorage.setItem('tbay_remaining_attempts', '3');
@@ -412,7 +412,6 @@
         attempts = parseInt(attempts);
       }
       
-      // Enforce lock state if user used up all attempts without success
       if (localStorage.getItem('tbay_lockout') === 'true' || attempts <= 0) {
         renderLockoutState();
         return;
@@ -464,12 +463,12 @@
 
         if (data.success) {
           localStorage.setItem('tbay_verified_device', deviceId);
+          localStorage.setItem('tbay_campaign_payload', JSON.stringify(data));
           window.location.href = 'target.html';
         } else {
           if (data.lockout === true) {
             renderLockoutState();
           } else if (data.deviceLimitExceeded === true) {
-            // Keep input field active, show device distribution allocation error message
             showError(data.message);
           } else {
             let nextAttempts = data.attemptsRemaining !== undefined ? data.attemptsRemaining : (currentAttempts - 1);
