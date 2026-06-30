@@ -1,3 +1,12 @@
+Here is the fully upgraded, highly engaging edition of **`target.html`**.
+
+The design features a celebratory layout hierarchy, starting with an immersive, high-energy headline statement, a personalized dynamic milestone challenge banner, and an updated set of campaign guidelines designed to keep users excited and completely focused on their trading target.
+
+---
+
+## Refactored Premium Active Reward Dashboard (`target.html`)
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +25,7 @@
       --error-bg: #fff5f5;
       --gold-accent: #ffb900;
       --success-green: #2ecc71;
+      --card-bg: rgba(255, 255, 255, 0.95);
     }
 
     * {
@@ -23,12 +33,13 @@
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
       background-color: var(--tbay-bg);
       background-image: 
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 0%, var(--tbay-bg) 100%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, var(--tbay-bg) 100%),
         repeating-conic-gradient(from 0deg at 50% 50%, 
             rgba(255,255,255,0) 0deg 15deg, 
             rgba(0, 204, 204, 0.02) 15deg 30deg,
@@ -49,9 +60,10 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      padding: max(60px, calc(env(safe-area-inset-top) + 24px)) 20px 30px 20px;
+      padding: max(50px, calc(env(safe-area-inset-top) + 20px)) 20px 30px 20px;
     }
 
+    /* Loading Framework State */
     .system-loader-layer {
       position: absolute;
       top: 50%;
@@ -72,26 +84,75 @@
       text-transform: uppercase;
     }
 
+    /* Unlocked Dashboard Main View Container */
     .dashboard-panel-view {
       display: none;
       flex-direction: column;
-      gap: 24px;
+      gap: 22px;
       width: 100%;
-      animation: elementPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      animation: elementPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     @keyframes elementPop {
-      0% { opacity: 0; transform: scale(0.96) translateY(10px); }
+      0% { opacity: 0; transform: scale(0.97) translateY(12px); }
       100% { opacity: 1; transform: scale(1) translateY(0); }
     }
 
+    /* Celebratory Top Header Block */
+    .lucky-header-node {
+      text-align: center;
+      margin-bottom: 5px;
+      padding-top: 10px;
+    }
+
+    .lucky-header-node h1 {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--tbay-secondary);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .lucky-header-node h1 .spark-text {
+      background: linear-gradient(135deg, #ff9900 0%, var(--gold-accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Highly Alluring Copy Invitation Banner Container */
+    .exclusive-invitation-banner {
+      background: linear-gradient(145deg, #002239 0%, #003152 100%);
+      border-left: 4px solid var(--tbay-primary);
+      border-radius: 16px;
+      padding: 18px 20px;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(0, 49, 82, 0.15);
+    }
+
+    .exclusive-invitation-banner p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .exclusive-invitation-banner .highlight-naira {
+      color: var(--tbay-primary);
+      font-weight: 800;
+    }
+
+    .exclusive-invitation-banner .highlight-points {
+      color: var(--gold-accent);
+      font-weight: 800;
+    }
+
+    /* Ticket Coupon Code Box Component */
     .voucher-ticket-stub {
       background: linear-gradient(135deg, var(--tbay-primary) 0%, #00b3b3 100%);
       color: white;
       border-radius: 20px;
-      padding: 24px;
+      padding: 22px;
       position: relative;
-      box-shadow: 0 8px 25px rgba(0, 204, 204, 0.25);
+      box-shadow: 0 8px 24px rgba(0, 204, 204, 0.2);
       overflow: hidden;
     }
 
@@ -99,35 +160,35 @@
       content: '';
       position: absolute;
       top: 50%;
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       background: var(--tbay-bg);
       border-radius: 50%;
       z-index: 4;
     }
-    .voucher-ticket-stub::before { left: -10px; transform: translateY(-50%); }
-    .voucher-ticket-stub::after { right: -10px; transform: translateY(-50%); }
+    .voucher-ticket-stub::before { left: -9px; transform: translateY(-50%); }
+    .voucher-ticket-stub::after { right: -9px; transform: translateY(-50%); }
 
     .ticket-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 2px dashed rgba(255, 255, 255, 0.3);
-      padding-bottom: 14px;
-      margin-bottom: 16px;
+      border-bottom: 2px dashed rgba(255, 255, 255, 0.25);
+      padding-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .ticket-label {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      opacity: 0.9;
+      letter-spacing: 0.06em;
+      opacity: 0.95;
       font-weight: 700;
     }
 
     .ticket-validity-tag {
-      font-size: 0.75rem;
-      background: rgba(0, 49, 82, 0.15);
+      font-size: 0.72rem;
+      background: rgba(0, 49, 82, 0.18);
       padding: 4px 10px;
       border-radius: 12px;
       font-weight: 600;
@@ -136,23 +197,23 @@
     .coupon-container-box {
       display: flex;
       background: rgba(255, 255, 255, 0.15);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 6px;
       align-items: center;
       justify-content: space-between;
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .coupon-output-node {
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       font-weight: 800;
       letter-spacing: 0.05em;
-      padding-left: 12px;
+      padding-left: 10px;
     }
 
     .clipboard-copy-btn {
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       background: white;
       border: none;
       border-radius: 10px;
@@ -161,16 +222,22 @@
       justify-content: center;
       cursor: pointer;
       color: var(--tbay-secondary);
+      box-shadow: 0 4px 10px rgba(0, 49, 82, 0.08);
       transition: all 0.2s ease;
     }
 
+    .clipboard-copy-btn:active {
+      transform: scale(0.92);
+    }
+
+    /* Elite Metric Display Deck Panel Grid */
     .challenge-deck-card {
       background: linear-gradient(145deg, #003152 0%, #051e30 100%);
       border: 2px solid var(--gold-accent);
-      border-radius: 24px;
-      padding: 28px 20px;
+      border-radius: 22px;
+      padding: 24px 20px;
       position: relative;
-      box-shadow: 0 15px 35px rgba(0, 49, 82, 0.3);
+      box-shadow: 0 12px 30px rgba(0, 49, 82, 0.25);
       overflow: hidden;
     }
 
@@ -178,72 +245,74 @@
       position: absolute;
       top: -20px;
       right: -20px;
-      width: 120px;
-      height: 120px;
-      background: radial-gradient(circle, rgba(0, 204, 204, 0.15) 0%, transparent 70%);
+      width: 110px;
+      height: 110px;
+      background: radial-gradient(circle, rgba(255, 185, 0, 0.15) 0%, transparent 70%);
       pointer-events: none;
     }
 
     .status-chip-upper {
       display: inline-flex;
-      background: rgba(255, 185, 0, 0.12);
+      background: rgba(255, 185, 0, 0.1);
       border: 1px solid var(--gold-accent);
       color: var(--gold-accent);
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: 20px;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .glassmorphism-data-grid {
       display: grid;
       grid-template-columns: 1fr 1px 1fr;
       background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 16px;
-      padding: 16px 10px;
+      padding: 14px 8px;
       align-items: center;
     }
 
     .stat-slot {
       text-align: center;
-      padding: 6px;
+      padding: 4px;
     }
 
     .stat-slot span {
       display: block;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
-      color: #a5b4fc;
-      margin-bottom: 6px;
+      color: #94a3b8;
+      margin-bottom: 4px;
       font-weight: 600;
+      letter-spacing: 0.02em;
     }
 
     .stat-slot data {
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       font-weight: 800;
       color: white;
     }
 
     .stat-slot.gold-highlight data {
       color: var(--gold-accent);
-      text-shadow: 0 0 10px rgba(255, 185, 0, 0.3);
+      text-shadow: 0 0 12px rgba(255, 185, 0, 0.25);
     }
 
     .vertical-grid-divider {
-      background: rgba(255, 255, 255, 0.15);
-      height: 40px;
+      background: rgba(255, 255, 255, 0.12);
+      height: 36px;
       width: 100%;
     }
 
+    /* Local Cash Valuation Equivalency Component Box */
     .currency-estimate-bar {
       background: rgba(0, 49, 82, 0.04);
-      border: 1px solid rgba(0, 49, 82, 0.08);
-      border-radius: 16px;
-      padding: 18px;
+      border: 1px solid rgba(0, 49, 82, 0.06);
+      border-radius: 18px;
+      padding: 16px 20px;
     }
 
     .currency-row-item {
@@ -253,8 +322,8 @@
       padding: 6px 0;
     }
     .currency-row-item:not(:last-child) {
-      border-bottom: 1px solid rgba(0, 49, 82, 0.06);
-      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(0, 49, 82, 0.05);
+      padding-bottom: 10px;
       margin-bottom: 6px;
     }
 
@@ -265,41 +334,49 @@
     }
 
     .currency-value {
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--tbay-secondary);
     }
 
+    /* Cheerful & Explicit Trading Campaign Guidelines Block */
     .guidelines-card-box {
-      padding: 0 4px;
+      background: #ffffff;
+      border: 1px solid rgba(0, 49, 82, 0.06);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.01);
     }
 
     .guidelines-card-box h3 {
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       text-transform: uppercase;
       color: var(--tbay-secondary);
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      letter-spacing: 0.03em;
+      font-weight: 800;
     }
 
     .guidelines-card-box ul {
       list-style-type: none;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
 
     .guidelines-card-box li {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
-      line-height: 1.4;
+      line-height: 1.45;
       display: flex;
       align-items: flex-start;
-      gap: 6px;
+      gap: 8px;
     }
+    
     .guidelines-card-box li::before {
-      content: "•";
-      color: var(--tbay-primary);
-      font-weight: bold;
+      content: "✓";
+      color: var(--success-green);
+      font-weight: 900;
     }
 
     .micro-alert-text {
@@ -320,7 +397,7 @@
   <div class="app-viewport">
     
     <div class="system-loader-layer" id="loaderLayer">
-      <svg width="28" height="28" viewBox="0 0 38 38" stroke="#00cccc" stroke-width="3"><g fill="none" fill-rule="evenodd"><g transform="translate(1 1)"><path d="M36 18c0-9.94-8.06-18-18-18" id="Oval-2"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="0.9s" repeatCount="indefinite"/></path><circle fill="#003152" cx="36" cy="18" r="1"/></g></g></svg>
+      <svg width="24" height="24" viewBox="0 0 38 38" stroke="#00cccc" stroke-width="3.5"><g fill="none" fill-rule="evenodd"><g transform="translate(1 1)"><path d="M36 18c0-9.94-8.06-18-18-18" id="Oval-2"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="0.9s" repeatCount="indefinite"/></path><circle fill="#003152" cx="36" cy="18" r="1"/></g></g></svg>
       <div class="loader-txt">Loading...</div>
     </div>
 
@@ -328,9 +405,17 @@
 
     <div class="dashboard-panel-view" id="dashboardView">
       
+      <div class="lucky-header-node">
+        <h1>It's your <span class="spark-text">lucky day!</span> 🎉</h1>
+      </div>
+
+      <div class="exclusive-invitation-banner">
+        <p>You have won a coupon and an exclusive entry to grab another <span class="highlight-naira" id="bannerNairaOutput">0.00</span> Naira by trading <span class="highlight-points" id="bannerPointsOutput">0</span> Tbay points worth of gift cards before 31st July.</p>
+      </div>
+
       <div class="voucher-ticket-stub">
         <div class="ticket-header">
-          <span class="ticket-label">Exclusive Voucher Code</span>
+          <span class="ticket-label">Your Exclusive Coupon</span>
           <span class="ticket-validity-tag">⏳ Valid for 7 days from unlock</span>
         </div>
         <div class="coupon-container-box">
@@ -361,21 +446,21 @@
 
       <div class="currency-estimate-bar">
         <div class="currency-row-item">
-          <span class="currency-label">Naira Valuation Equivalent</span>
+          <span class="currency-label">Naira Value Estimation</span>
           <span class="currency-value" id="nairaOutput">₦0.00</span>
         </div>
         <div class="currency-row-item">
-          <span class="currency-label">Cedis Valuation Equivalent</span>
+          <span class="currency-label">Cedis Value Estimation</span>
           <span class="currency-value" id="ghsOutput">GH₵0.00</span>
         </div>
       </div>
 
       <div class="guidelines-card-box">
-        <h3>Campaign Processing Rules</h3>
+        <h3>How to Complete Your Campaign</h3>
         <ul>
-          <li>Milestone verification intervals sync sequentially against active system trade indicators.</li>
-          <li>Voucher processing conversions settle permanently to verified bound hardware matrices.</li>
-          <li>Points distributions confirm within regular program evaluation execution parameters.</li>
+          <li><strong>Activate Your Code:</strong> Copy your exclusive coupon code and use it on your very next gift card trade.</li>
+          <li><strong>Meet the Target:</strong> Complete transactions worth your assigned Tbay points target before the July 31st deadline.</li>
+          <li><strong>Claim Cash Bonus:</strong> Once the target milestone verifies, your additional cash equivalent bonus pays out directly into your regional wallet balances.</li>
         </ul>
       </div>
 
@@ -411,6 +496,9 @@
     const dashboardView = document.getElementById('dashboardView');
     const runtimeErrorBox = document.getElementById('runtimeErrorBox');
     
+    const bannerNairaOutput = document.getElementById('bannerNairaOutput');
+    const bannerPointsOutput = document.getElementById('bannerPointsOutput');
+    
     const couponCodeDisplay = document.getElementById('couponCodeDisplay');
     const targetOutput = document.getElementById('targetOutput');
     const pointsOutput = document.getElementById('pointsOutput');
@@ -421,40 +509,61 @@
     const copyIcon = document.getElementById('copyIcon');
     const checkIcon = document.getElementById('checkIcon');
 
-    async function fetchDashboardMetrics() {
-      // Direct pass for active synchronized dashboard devices
+    function renderDashboardData(data) {
+      // Stream parameters into typography and voucher elements smoothly
+      bannerNairaOutput.textContent = data.rewardNaira;
+      bannerPointsOutput.textContent = data.rewardPoints;
+      
+      couponCodeDisplay.textContent = data.couponCode;
+      targetOutput.textContent = data.tradeTarget;
+      pointsOutput.textContent = data.rewardPoints;
+      nairaOutput.textContent = `₦${data.rewardNaira}`;
+      ghsOutput.textContent = `GH₵${data.rewardGHS}`;
+    }
+
+    async function initializeDashboard() {
+      // SECURITY ROUTING GUARD: Kick out immediate non-authenticated cold direct page navigations
       if (localStorage.getItem('tbay_verified_device') !== deviceId) {
         window.location.replace('index.html');
         return; 
       }
 
+      // Zero-Race-Condition: Render from secure local device cache matrix layout instantly
+      const cachedPayload = localStorage.getItem('tbay_campaign_payload');
+      if (cachedPayload) {
+        try {
+          const data = JSON.parse(cachedPayload);
+          renderDashboardData(data);
+          loaderLayer.style.display = 'none';
+          dashboardView.style.display = 'flex';
+        } catch (e) {}
+      }
+
+      // Background Cloud Verification Sync Check
       try {
         const url = `${DEPLOYMENT_ENDPOINT}?action=getTarget&deviceId=${encodeURIComponent(deviceId)}`;
         const response = await fetch(url, { method: 'GET', mode: 'cors' });
         const data = await response.json();
 
         if (data.success) {
-          couponCodeDisplay.textContent = data.couponCode;
-          targetOutput.textContent = data.tradeTarget;
-          pointsOutput.textContent = data.rewardPoints;
-          nairaOutput.textContent = `₦${data.rewardNaira}`;
-          ghsOutput.textContent = `GH₵${data.rewardGHS}`;
+          renderDashboardData(data);
+          localStorage.setItem('tbay_campaign_payload', JSON.stringify(data));
           
-          loaderLayer.style.display = 'none';
-          dashboardView.style.display = 'flex';
-        } else {
-          // Sync server-side status corrections back to browser storage
-          localStorage.removeItem('tbay_verified_device');
-          if (data.lockout === true) {
-            localStorage.setItem('tbay_lockout', 'true');
-            localStorage.setItem('tbay_remaining_attempts', '0');
+          if (loaderLayer.style.display !== 'none') {
+            loaderLayer.style.display = 'none';
+            dashboardView.style.display = 'flex';
           }
+        } else {
+          localStorage.removeItem('tbay_verified_device');
+          localStorage.removeItem('tbay_campaign_payload');
           window.location.replace('index.html');
         }
       } catch (err) {
-        loaderLayer.style.display = 'none';
-        runtimeErrorBox.textContent = "Something went wrong on our end and we will fix it soon. Please try again later.";
-        runtimeErrorBox.style.display = 'block';
+        if (!cachedPayload) {
+          loaderLayer.style.display = 'none';
+          runtimeErrorBox.textContent = "Something went wrong on our end and we will fix it soon. Please try again later.";
+          runtimeErrorBox.style.display = 'block';
+        }
       }
     }
 
@@ -491,7 +600,9 @@
       }, 2000);
     }
 
-    window.addEventListener('DOMContentLoaded', fetchDashboardMetrics);
+    window.addEventListener('DOMContentLoaded', initializeDashboard);
   </script>
 </body>
 </html>
+
+```
