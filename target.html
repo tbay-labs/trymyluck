@@ -29,7 +29,7 @@
     body {
       background-color: var(--tbay-bg);
       background-image: 
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 0%, var(--tbay-bg) 100%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, var(--tbay-bg) 100%),
         repeating-conic-gradient(from 0deg at 50% 50%, 
             rgba(255,255,255,0) 0deg 15deg, 
             rgba(0, 204, 204, 0.02) 15deg 30deg,
@@ -53,6 +53,7 @@
       padding: max(50px, calc(env(safe-area-inset-top) + 20px)) 20px 30px 20px;
     }
 
+    /* Loading Framework State */
     .system-loader-layer {
       position: absolute;
       top: 50%;
@@ -73,6 +74,7 @@
       text-transform: uppercase;
     }
 
+    /* Unlocked Dashboard Main View Container */
     .dashboard-panel-view {
       display: none;
       flex-direction: column;
@@ -86,6 +88,7 @@
       100% { opacity: 1; transform: scale(1) translateY(0); }
     }
 
+    /* Celebratory Top Header Block */
     .lucky-header-node {
       text-align: center;
       margin-bottom: 5px;
@@ -106,6 +109,7 @@
       -webkit-text-fill-color: transparent;
     }
 
+    /* Highly Alluring Copy Invitation Banner Container */
     .exclusive-invitation-banner {
       background: linear-gradient(145deg, #002239 0%, #003152 100%);
       border-left: 4px solid var(--tbay-primary);
@@ -126,6 +130,7 @@
       font-weight: 800;
     }
 
+    /* Ticket Coupon Code Box Component */
     .voucher-ticket-stub {
       background: linear-gradient(135deg, var(--tbay-primary) 0%, #00b3b3 100%);
       color: white;
@@ -205,6 +210,7 @@
       box-shadow: 0 4px 10px rgba(0, 49, 82, 0.08);
     }
 
+    /* Elite Metric Display Deck Panel Grid */
     .challenge-deck-card {
       background: linear-gradient(145deg, #003152 0%, #051e30 100%);
       border: 2px solid var(--gold-accent);
@@ -281,37 +287,13 @@
       width: 100%;
     }
 
-    .currency-estimate-bar {
-      background: rgba(0, 49, 82, 0.04);
-      border: 1px solid rgba(0, 49, 82, 0.06);
-      border-radius: 18px;
-      padding: 18px 20px;
-    }
-
-    .currency-row-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 4px 0;
-    }
-
-    .currency-label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-muted);
-    }
-
-    .currency-value {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--tbay-secondary);
-    }
-
+    /* Cheerful & Explicit Trading Campaign Guidelines Block */
     .guidelines-card-box {
       background: #ffffff;
       border: 1px solid rgba(0, 49, 82, 0.06);
       border-radius: 20px;
       padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.01);
     }
 
     .guidelines-card-box h3 {
@@ -372,7 +354,7 @@
     <div class="dashboard-panel-view" id="dashboardView">
       
       <div class="lucky-header-node">
-        <h1>It's your <span class="spark-text">lucky day!</span> 👑</h1>
+        <h1>It's your <span class="spark-text">lucky day!</span> 🎉</h1>
       </div>
 
       <div class="exclusive-invitation-banner">
@@ -407,13 +389,6 @@
             <span>💎 Points Payout</span>
             <data id="pointsOutput">0</data>
           </div>
-        </div>
-      </div>
-
-      <div class="currency-estimate-bar">
-        <div class="currency-row-item">
-          <span class="currency-label" id="dynamicCurrencyLabel">Guaranteed Reward Value</span>
-          <span class="currency-value" id="dynamicCurrencyValue">------</span>
         </div>
       </div>
 
@@ -464,8 +439,6 @@
     const couponCodeDisplay = document.getElementById('couponCodeDisplay');
     const targetOutput = document.getElementById('targetOutput');
     const pointsOutput = document.getElementById('pointsOutput');
-    const dynamicCurrencyLabel = document.getElementById('dynamicCurrencyLabel');
-    const dynamicCurrencyValue = document.getElementById('dynamicCurrencyValue');
 
     const copyActionBtn = document.getElementById('copyActionBtn');
     const copyIcon = document.getElementById('copyIcon');
@@ -477,16 +450,13 @@
       const finalCashValue = isGHS ? data.rewardGHS : data.rewardNaira;
       const formattedCashString = `${currencySymbol}${finalCashValue}`;
 
-      // Show the currency everywhere dynamically based on withdrawal currency choice
+      // Show localized formatting only inside the promotional sentence
       bannerDynamicCash.textContent = formattedCashString;
       bannerPointsOutput.textContent = data.rewardPoints;
       
       couponCodeDisplay.textContent = data.couponCode;
       targetOutput.textContent = data.tradeTarget;
       pointsOutput.textContent = data.rewardPoints;
-      
-      dynamicCurrencyLabel.textContent = isGHS ? "GHS Value Estimation" : "Naira Value Estimation";
-      dynamicCurrencyValue.textContent = formattedCashString;
     }
 
     async function initializeDashboard() {
