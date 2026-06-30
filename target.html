@@ -16,7 +16,6 @@
       --error-bg: #fff5f5;
       --gold-accent: #ffb900;
       --success-green: #2ecc71;
-      --card-bg: rgba(255, 255, 255, 0.95);
     }
 
     * {
@@ -30,7 +29,7 @@
     body {
       background-color: var(--tbay-bg);
       background-image: 
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, var(--tbay-bg) 100%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 0%, var(--tbay-bg) 100%),
         repeating-conic-gradient(from 0deg at 50% 50%, 
             rgba(255,255,255,0) 0deg 15deg, 
             rgba(0, 204, 204, 0.02) 15deg 30deg,
@@ -54,7 +53,6 @@
       padding: max(50px, calc(env(safe-area-inset-top) + 20px)) 20px 30px 20px;
     }
 
-    /* Loading Framework State */
     .system-loader-layer {
       position: absolute;
       top: 50%;
@@ -75,7 +73,6 @@
       text-transform: uppercase;
     }
 
-    /* Unlocked Dashboard Main View Container */
     .dashboard-panel-view {
       display: none;
       flex-direction: column;
@@ -89,7 +86,6 @@
       100% { opacity: 1; transform: scale(1) translateY(0); }
     }
 
-    /* Celebratory Top Header Block */
     .lucky-header-node {
       text-align: center;
       margin-bottom: 5px;
@@ -110,7 +106,6 @@
       -webkit-text-fill-color: transparent;
     }
 
-    /* Highly Alluring Copy Invitation Banner Container */
     .exclusive-invitation-banner {
       background: linear-gradient(145deg, #002239 0%, #003152 100%);
       border-left: 4px solid var(--tbay-primary);
@@ -126,17 +121,11 @@
       font-weight: 500;
     }
 
-    .exclusive-invitation-banner .highlight-naira {
+    .exclusive-invitation-banner .highlight-cash {
       color: var(--tbay-primary);
       font-weight: 800;
     }
 
-    .exclusive-invitation-banner .highlight-points {
-      color: var(--gold-accent);
-      font-weight: 800;
-    }
-
-    /* Ticket Coupon Code Box Component */
     .voucher-ticket-stub {
       background: linear-gradient(135deg, var(--tbay-primary) 0%, #00b3b3 100%);
       color: white;
@@ -214,14 +203,8 @@
       cursor: pointer;
       color: var(--tbay-secondary);
       box-shadow: 0 4px 10px rgba(0, 49, 82, 0.08);
-      transition: all 0.2s ease;
     }
 
-    .clipboard-copy-btn:active {
-      transform: scale(0.92);
-    }
-
-    /* Elite Metric Display Deck Panel Grid */
     .challenge-deck-card {
       background: linear-gradient(145deg, #003152 0%, #051e30 100%);
       border: 2px solid var(--gold-accent);
@@ -298,24 +281,18 @@
       width: 100%;
     }
 
-    /* Local Cash Valuation Equivalency Component Box */
     .currency-estimate-bar {
       background: rgba(0, 49, 82, 0.04);
       border: 1px solid rgba(0, 49, 82, 0.06);
       border-radius: 18px;
-      padding: 16px 20px;
+      padding: 18px 20px;
     }
 
     .currency-row-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 6px 0;
-    }
-    .currency-row-item:not(:last-child) {
-      border-bottom: 1px solid rgba(0, 49, 82, 0.05);
-      padding-bottom: 10px;
-      margin-bottom: 6px;
+      padding: 4px 0;
     }
 
     .currency-label {
@@ -325,18 +302,16 @@
     }
 
     .currency-value {
-      font-size: 1rem;
-      font-weight: 700;
+      font-size: 1.15rem;
+      font-weight: 800;
       color: var(--tbay-secondary);
     }
 
-    /* Cheerful & Explicit Trading Campaign Guidelines Block */
     .guidelines-card-box {
       background: #ffffff;
       border: 1px solid rgba(0, 49, 82, 0.06);
       border-radius: 20px;
       padding: 20px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.01);
     }
 
     .guidelines-card-box h3 {
@@ -397,11 +372,11 @@
     <div class="dashboard-panel-view" id="dashboardView">
       
       <div class="lucky-header-node">
-        <h1>It's your <span class="spark-text">lucky day!</span> 🎉</h1>
+        <h1>It's your <span class="spark-text">lucky day!</span> 👑</h1>
       </div>
 
       <div class="exclusive-invitation-banner">
-        <p>You have won a coupon and an exclusive entry to grab another <span class="highlight-naira" id="bannerNairaOutput">0.00</span> Naira by trading <span class="highlight-points" id="bannerPointsOutput">0</span> Tbay points worth of gift cards before 31st July.</p>
+        <p>You have won a coupon and an exclusive entry to grab another <span class="highlight-cash" id="bannerDynamicCash">------</span> by trading <span class="highlight-cash" id="bannerPointsOutput">0</span> Tbay points worth of gift cards before 31st July.</p>
       </div>
 
       <div class="voucher-ticket-stub">
@@ -437,21 +412,17 @@
 
       <div class="currency-estimate-bar">
         <div class="currency-row-item">
-          <span class="currency-label">Naira Value Estimation</span>
-          <span class="currency-value" id="nairaOutput">₦0.00</span>
-        </div>
-        <div class="currency-row-item">
-          <span class="currency-label">Cedis Value Estimation</span>
-          <span class="currency-value" id="ghsOutput">GH₵0.00</span>
+          <span class="currency-label" id="dynamicCurrencyLabel">Guaranteed Reward Value</span>
+          <span class="currency-value" id="dynamicCurrencyValue">------</span>
         </div>
       </div>
 
       <div class="guidelines-card-box">
         <h3>How to Complete Your Campaign</h3>
         <ul>
-          <li><strong>Activate Your Code:</strong> Copy your exclusive coupon code and use it on your very next gift card trade.</li>
-          <li><strong>Meet the Target:</strong> Complete transactions worth your assigned Tbay points target before the July 31st deadline.</li>
-          <li><strong>Claim Cash Bonus:</strong> Once the target milestone verifies, your additional cash equivalent bonus pays out directly into your regional wallet balances.</li>
+          <li><strong>Activate Your Code:</strong> Copy your exclusive coupon code and apply it on your next gift card trade.</li>
+          <li><strong>Meet the Target:</strong> Complete transactions matching your points target before the July 31st deadline.</li>
+          <li><strong>Claim Cash Bonus:</strong> Once verified, your cash reward bonus pays out directly into your specified wallet balances.</li>
         </ul>
       </div>
 
@@ -487,39 +458,43 @@
     const dashboardView = document.getElementById('dashboardView');
     const runtimeErrorBox = document.getElementById('runtimeErrorBox');
     
-    const bannerNairaOutput = document.getElementById('bannerNairaOutput');
+    const bannerDynamicCash = document.getElementById('bannerDynamicCash');
     const bannerPointsOutput = document.getElementById('bannerPointsOutput');
     
     const couponCodeDisplay = document.getElementById('couponCodeDisplay');
     const targetOutput = document.getElementById('targetOutput');
     const pointsOutput = document.getElementById('pointsOutput');
-    const nairaOutput = document.getElementById('nairaOutput');
-    const ghsOutput = document.getElementById('ghsOutput');
+    const dynamicCurrencyLabel = document.getElementById('dynamicCurrencyLabel');
+    const dynamicCurrencyValue = document.getElementById('dynamicCurrencyValue');
 
     const copyActionBtn = document.getElementById('copyActionBtn');
     const copyIcon = document.getElementById('copyIcon');
     const checkIcon = document.getElementById('checkIcon');
 
     function renderDashboardData(data) {
-      // Stream parameters into typography and voucher elements smoothly
-      bannerNairaOutput.textContent = data.rewardNaira;
+      const isGHS = String(data.withdrawalCurrency).trim().toLowerCase() === 'ghs';
+      const currencySymbol = isGHS ? 'GH₵' : '₦';
+      const finalCashValue = isGHS ? data.rewardGHS : data.rewardNaira;
+      const formattedCashString = `${currencySymbol}${finalCashValue}`;
+
+      // Show the currency everywhere dynamically based on withdrawal currency choice
+      bannerDynamicCash.textContent = formattedCashString;
       bannerPointsOutput.textContent = data.rewardPoints;
       
       couponCodeDisplay.textContent = data.couponCode;
       targetOutput.textContent = data.tradeTarget;
       pointsOutput.textContent = data.rewardPoints;
-      nairaOutput.textContent = `₦${data.rewardNaira}`;
-      ghsOutput.textContent = `GH₵${data.rewardGHS}`;
+      
+      dynamicCurrencyLabel.textContent = isGHS ? "GHS Value Estimation" : "Naira Value Estimation";
+      dynamicCurrencyValue.textContent = formattedCashString;
     }
 
     async function initializeDashboard() {
-      // SECURITY ROUTING GUARD: Kick out immediate non-authenticated cold direct page navigations
       if (localStorage.getItem('tbay_verified_device') !== deviceId) {
         window.location.replace('index.html');
         return; 
       }
 
-      // Zero-Race-Condition: Render from secure local device cache matrix layout instantly
       const cachedPayload = localStorage.getItem('tbay_campaign_payload');
       if (cachedPayload) {
         try {
@@ -530,7 +505,6 @@
         } catch (e) {}
       }
 
-      // Background Cloud Verification Sync Check
       try {
         const url = `${DEPLOYMENT_ENDPOINT}?action=getTarget&deviceId=${encodeURIComponent(deviceId)}`;
         const response = await fetch(url, { method: 'GET', mode: 'cors' });
@@ -595,5 +569,3 @@
   </script>
 </body>
 </html>
-
-```
