@@ -252,6 +252,7 @@
       animation: none;
     }
 
+    /* Fixed Error Component positioning underneath form stacks */
     .system-error-ribbon {
       display: none;
       background: var(--error-bg);
@@ -355,8 +356,8 @@
 
       <div id="stateBContainer" class="lockout-layout-wrapper">
         <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="var(--error-red)" stroke-width="1.5" style="margin-bottom: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286zm0 13.036h.008v.008H12v-.008z" /></svg>
-        <h2>Chances Completed</h2>
-        <p>You have completed all 3 available promotional verification attempts allocated for this session. Thank you for being a valued part of our platform. Keep an eye out for future exclusive campaigns designed specifically for you.</p>
+        <h2 id="lockoutTitle">Chances Completed</h2>
+        <p id="lockoutDescription">You have completed all 3 available promotional verification attempts allocated for this session. Thank you for being a valued part of our platform. Keep an eye out for future exclusive campaigns designed specifically for you.</p>
         <button class="close-system-btn" id="closeBtn">Close</button>
       </div>
 
@@ -396,8 +397,9 @@
     const errorRibbon = document.getElementById('errorRibbon');
     const backArrowBtn = document.getElementById('backArrowBtn');
     const closeBtn = document.getElementById('closeBtn');
+    const lockoutDescription = document.getElementById('lockoutDescription');
 
-    // Binds explicitly to pageshow events to permanently kill memory-cache page state preservation
+    // Completely neutralizes aggressive webview memory BFcache snapshots
     window.addEventListener('pageshow', (event) => {
       initApp();
     });
@@ -417,10 +419,12 @@
       }
       
       if (localStorage.getItem('tbay_lockout') === 'true' || attempts <= 0) {
-        renderLockoutState();
+        renderLockoutState(localStorage.getItem('tbay_lockout_msg'));
         return;
       }
       
+      stateA.style.display = 'block';
+      stateB.style.display = 'none';
       updateBadgeUI(attempts);
     }
 
@@ -433,9 +437,13 @@
       }
     }
 
-    function renderLockoutState() {
+    function renderLockoutState(customMessage) {
       localStorage.setItem('tbay_lockout', 'true');
       localStorage.setItem('tbay_remaining_attempts', '0');
+      if (customMessage) {
+        localStorage.setItem('tbay_lockout_msg', customMessage);
+        lockoutDescription.textContent = customMessage;
+      }
       stateA.style.display = 'none';
       stateB.style.display = 'block';
     }
@@ -471,7 +479,11 @@
           window.location.replace('target.html');
         } else {
           if (data.lockout === true) {
-            renderLockoutState();
+            // Displays error matrix on form first, then instantly transitions and seals State B layout
+            showError(data.message);
+            setTimeout(() => {
+              renderLockoutState(data.message);
+            }, 800);
           } else if (data.deviceLimitExceeded === true) {
             showError(data.message);
           } else {
