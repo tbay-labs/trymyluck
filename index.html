@@ -1,14 +1,3 @@
-To handle this auto-redirect, we can add a validation gate right at the top of the app's initialization routine (`initApp`).
-
-Since `index.html` already saves the verified token state to `localStorage.setItem('tbay_verified_device', deviceId)` upon a successful response, we can instantly read that token on page load. If it exists and matches the current device profile, it immediately shifts the window location to `target.html` before the user even has a chance to see or fill out the input form again.
-
-Here is the updated, complete **`index.html`** containing this automatic routing optimization:
-
----
-
-## Updated Premium Gateway with Auto-Redirect (`index.html`)
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -374,8 +363,7 @@ Here is the updated, complete **`index.html`** containing this automatic routing
   </div>
 
   <script>
-    // Insert your live serverless Google Apps Script Web App Deployment URL Token here
-    const DEPLOYMENT_ENDPOINT = "YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+    const DEPLOYMENT_ENDPOINT = "https://script.google.com/macros/s/AKfycbyGM5u08oekxwYHItPoZah2t7_ZQQlnkyYkc7v1exvCIE8H_aYeWA0GhpfzEgUc0t2Vog/exec";
 
     function generateDeviceSignature() {
       let keys = [
@@ -409,18 +397,13 @@ Here is the updated, complete **`index.html`** containing this automatic routing
     const closeBtn = document.getElementById('closeBtn');
 
     function initApp() {
-      // 1. High-Speed Verification Sync Pre-Check Route Optimization
+      // Direct pass for active synchronized dashboard devices
       if (localStorage.getItem('tbay_verified_device') === deviceId) {
         window.location.href = 'target.html';
-        return; // Break execution frame early to execute clean forwarding process
-      }
-
-      // 2. Blacklist Tracking Array Lockout Gatekeeper Scan
-      if (localStorage.getItem('tbay_lockout') === 'true') {
-        renderLockoutState();
         return;
       }
-      
+
+      // Check current attempt limits
       let attempts = localStorage.getItem('tbay_remaining_attempts');
       if (attempts === null) {
         localStorage.setItem('tbay_remaining_attempts', '3');
@@ -429,11 +412,13 @@ Here is the updated, complete **`index.html`** containing this automatic routing
         attempts = parseInt(attempts);
       }
       
-      updateBadgeUI(attempts);
-      
-      if (attempts <= 0) {
+      // Enforce lock state if user used up all attempts without success
+      if (localStorage.getItem('tbay_lockout') === 'true' || attempts <= 0) {
         renderLockoutState();
+        return;
       }
+      
+      updateBadgeUI(attempts);
     }
 
     function updateBadgeUI(count) {
@@ -447,6 +432,7 @@ Here is the updated, complete **`index.html`** containing this automatic routing
 
     function renderLockoutState() {
       localStorage.setItem('tbay_lockout', 'true');
+      localStorage.setItem('tbay_remaining_attempts', '0');
       stateA.style.display = 'none';
       stateB.style.display = 'block';
     }
@@ -454,7 +440,7 @@ Here is the updated, complete **`index.html`** containing this automatic routing
     function showError(msg) {
       errorRibbon.textContent = msg;
       errorRibbon.classList.remove('active');
-      void errorRibbon.offsetWidth; // Force internal browser rendering engine reflow calculation
+      void errorRibbon.offsetWidth; 
       errorRibbon.classList.add('active');
     }
 
@@ -481,8 +467,10 @@ Here is the updated, complete **`index.html`** containing this automatic routing
           window.location.href = 'target.html';
         } else {
           if (data.lockout === true) {
-            localStorage.setItem('tbay_remaining_attempts', '0');
             renderLockoutState();
+          } else if (data.deviceLimitExceeded === true) {
+            // Keep input field active, show device distribution allocation error message
+            showError(data.message);
           } else {
             let nextAttempts = data.attemptsRemaining !== undefined ? data.attemptsRemaining : (currentAttempts - 1);
             localStorage.setItem('tbay_remaining_attempts', nextAttempts.toString());
@@ -512,5 +500,3 @@ Here is the updated, complete **`index.html`** containing this automatic routing
   </script>
 </body>
 </html>
-
-```
