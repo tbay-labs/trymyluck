@@ -58,6 +58,57 @@
       pointer-events: none;
     }
 
+    /* PREMIUM INITIALIZATION OVERLAY SCREEN OVERHAUL LAYOUT */
+    #app-init-loader {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--tbay-bg);
+      background-image: 
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, var(--tbay-bg) 100%),
+        repeating-conic-gradient(from 0deg at 50% 50%, 
+            rgba(255,255,255,0) 0deg 15deg, 
+            rgba(0, 204, 204, 0.02) 15deg 30deg,
+            rgba(255,255,255,0) 30deg 45deg,
+            rgba(0, 49, 82, 0.015) 45deg 60deg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      z-index: 9999;
+      opacity: 1;
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .init-spinner-ring {
+      width: 44px;
+      height: 44px;
+      border: 3.5px solid rgba(0, 49, 82, 0.06);
+      border-top: 3.5px solid var(--tbay-primary);
+      border-radius: 50%;
+      animation: spinLinear 0.8s linear infinite;
+    }
+
+    .init-charming-text {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--tbay-secondary);
+      letter-spacing: 0.2px;
+      animation: textPulseBreathing 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes spinLinear {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes textPulseBreathing {
+      0% { opacity: 0.55; transform: scale(0.97); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
     .app-viewport {
       width: 100%;
       max-width: 440px;
@@ -131,7 +182,6 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.02);
     }
 
-    /* Form starts hidden to allow the cloud sync engine to process silently */
     .portal-main-card {
       opacity: 0;
       background: transparent;
@@ -318,6 +368,11 @@
 </head>
 <body>
 
+  <div id="app-init-loader">
+    <div class="init-spinner-ring"></div>
+    <span class="init-charming-text">Summoning your lucky stars... 🌟</span>
+  </div>
+
   <div class="decorations-container">
     <div class="floating-asset coin-element" style="top: 14%; left: 5%;"></div>
     <div class="floating-asset coin-element" style="top: 68%; right: -6%; animation-delay: -3.5s; width: 24px; height: 24px;"></div>
@@ -404,15 +459,23 @@
       initApp();
     });
 
+    // PROGRAMMATIC INITIALIZATION DISMISSAL ANIMATION CONTROLLER
+    function dismissInitializationOverlay() {
+      const initOverlay = document.getElementById('app-init-loader');
+      if (initOverlay) {
+        initOverlay.style.opacity = '0';
+        setTimeout(() => {
+          initOverlay.style.display = 'none';
+        }, 350);
+      }
+    }
+
     async function initApp() {
-      // 1. Instant local token cache restoration path
       if (localStorage.getItem('tbay_verified_device') === deviceId && localStorage.getItem('tbay_campaign_payload')) {
         window.location.replace('target.html');
         return;
       }
 
-      // 2. Hardware Synchronization Search Circuit Loop
-      // Verifies whether the device's hardware signature is linked to a username in the database
       try {
         const url = `${DEPLOYMENT_ENDPOINT}?action=getTarget&deviceId=${encodeURIComponent(deviceId)}`;
         const response = await fetch(url, { method: 'GET', mode: 'cors' });
@@ -426,13 +489,13 @@
         } else if (data.lockout === true) {
           renderLockoutState(data.message);
           mainCardNode.classList.add('revealed');
+          dismissInitializationOverlay();
           return;
         }
       } catch (e) {
-        // Fall back to the manual entry form if network drops out
+        // Fall back seamlessly to manual inputs if network drops out
       }
 
-      // 3. Fallback to Local Attempts Management Matrix
       let attempts = localStorage.getItem('tbay_remaining_attempts');
       if (attempts === null) {
         localStorage.setItem('tbay_remaining_attempts', '3');
@@ -449,8 +512,8 @@
         updateBadgeUI(attempts);
       }
 
-      // Smoothly reveal the form card once state verification completes
       mainCardNode.classList.add('revealed');
+      dismissInitializationOverlay();
     }
 
     function updateBadgeUI(count) {
